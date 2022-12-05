@@ -8,6 +8,8 @@ Let Laravel SaaS Ready to become your companion along the way!
 
 It got you covered with almost every generic things, let's build awesome products on top of it.
 
+Documentation: (coming soon)
+
 ## Support
 
 - Laravel 9.x
