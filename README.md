@@ -41,11 +41,17 @@ Once you install the Laravel SaaS Ready, you got multiple things under your hand
 composer require sethsandaru/laravel-saas-ready
 ```
 
-### Booting up the stuff
+### First-time boot
 
 ```bash
 php artisan migrate
 ```
+
+### GUI
+
+Since all the things under Laravel SaaS Ready is RESTFul APIs. No GUI available.
+
+I planned to work on the seperate project for the GUI. Coming soon as well!
 
 ## Contribute to the project
 
