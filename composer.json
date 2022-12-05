@@ -1,0 +1,58 @@
+{
+  "name": "sethsandaru/laravel-saas-ready",
+  "type": "library",
+  "description": "Build up your next freaking SaaS with a great companion along the way",
+  "keywords": [
+    "laravel library",
+    "laravel saas",
+    "laravel saas ready",
+    "laravel saas ready generic components for your application"
+  ],
+  "authors": [
+    {
+      "name": "Phat Tran (Seth Phat)",
+      "email": "phattranminh96@gmail.com",
+      "homepage": "https://github.com/sethsandaru",
+      "role": "Sr.SE"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^8.1",
+    "laravel/framework": "^9|dev-master"
+  },
+  "require-dev": {
+    "fakerphp/faker": "^v1.20.0",
+    "mockery/mockery": "^1.5.1",
+    "phpunit/phpunit": "^9.5.25",
+    "orchestra/testbench": "^7",
+    "phpunit/php-code-coverage": "^9.2.17"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SaasReady\\SaasServiceProvider"
+      ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "SaasReady\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SaasReady\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test-coverage": [
+      "@php vendor/bin/phpunit --coverage-clover coverage.xml"
+    ],
+    "test": [
+      "@php vendor/bin/phpunit"
+    ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

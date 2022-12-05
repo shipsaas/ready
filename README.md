@@ -4,7 +4,7 @@
 
 Starting to build a new freaking SaaS product and deliver great features? 
 
-Let's Laravel SaaS Ready to become your companion along the way!
+Let Laravel SaaS Ready to become your companion along the way!
 
 It got you covered with almost every generic things, let's build awesome products on top of it.
 
@@ -19,7 +19,8 @@ Laravel SaaS Ready covers you up with all these things:
 
 - Controllers
 - Models
-- Helpers/Services
+- Helpers (classes or traits)
+- Services
 
 For all of these generic entities:
 
