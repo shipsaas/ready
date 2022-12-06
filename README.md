@@ -12,8 +12,12 @@ Documentation: (coming soon)
 
 ## Support
 
+### Laravel
 - Laravel 9.x
 - Laravel 10.x (upcoming)
+
+### PHP
+PHP 8.1+
 
 ## Features
 
@@ -42,6 +46,14 @@ Once you install the Laravel SaaS Ready, you got multiple things under your hand
 ### Install the dependency
 ```bash
 composer require sethsandaru/laravel-saas-ready
+```
+
+### Publish the configuration
+
+So you can add your desired configurations
+
+```bash
+php artisan vendor:publish --tag=saas-ready
 ```
 
 ### First-time boot
