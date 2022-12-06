@@ -21,12 +21,11 @@ abstract class TestCase extends BaseTestCase
 
     protected function getEnvironmentSetUp($app): void
     {
-        $countryMigration = include($this->getMigrationFile('2022_12_05_232100_create_countries_table.php'));
-        $countryMigration->up();
-    }
+        $migrationFiles = glob(__DIR__ . '/../src/Database/Migrations/*.php');
 
-    private function getMigrationFile(string $fileName): string
-    {
-        return __DIR__ . '/../src/Database/Migrations/' . $fileName;
+        foreach ($migrationFiles as $migrationFile) {
+            $migrateInstance = include($migrationFile);
+            $migrateInstance->up();
+        }
     }
 }
