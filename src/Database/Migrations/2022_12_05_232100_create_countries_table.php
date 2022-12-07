@@ -21,6 +21,7 @@ return new class () extends Migration {
             $table->string('dial_code');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

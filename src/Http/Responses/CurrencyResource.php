@@ -14,6 +14,14 @@ class CurrencyResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
+            'code' => $this->code,
+            'symbol' => $this->symbol,
+            'name' => $this->name,
+            'decimal_separator' => $this->decimal_separator,
+            'thousands_separator' => $this->thousands_separator,
+            'space_after_symbol' => $this->space_after_symbol,
+            'created_at' => $this->created_at?->toDateTimeString(),
+            'updated_at' => $this->updated_at?->toDateTimeString(),
         ];
     }
 }

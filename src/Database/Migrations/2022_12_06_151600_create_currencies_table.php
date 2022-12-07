@@ -22,6 +22,7 @@ return new class () extends Migration {
             $table->boolean('space_after_symbol');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

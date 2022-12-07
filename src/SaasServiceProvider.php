@@ -18,8 +18,18 @@ class SaasServiceProvider extends ServiceProvider
         ], 'saas-ready');
 
         $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
-        $this->loadRoutesFrom(__DIR__.'/Routes/saas-ready-routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/Routes/saas-ready-routes.php');
 
-        Event::listen(EventSourcingContract::class, EventSourcingListener::class);
+        Event::listen(EventSourcingContract::class, function (EventSourcingContract $event) {
+            if (!config('saas-ready.event-sourcing.should-queue')) {
+                EventSourcingListener::dispatchSync($event);
+
+                return;
+            }
+
+            EventSourcingListener::dispatch($event)
+                ->onQueue(config('saas-ready.event-sourcing.queue-name'))
+                ->onConnection(config('saas-ready.event-sourcing.queue-connection'));
+        });
     }
 }
