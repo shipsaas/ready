@@ -1,6 +1,6 @@
 <?php
 
-namespace SaasReady\Factories;
+namespace SaasReady\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use SaasReady\Models\Country;

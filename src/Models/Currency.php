@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use SaasReady\Constants\CurrencyCode;
 use SaasReady\Traits\EloquentBuilderMixin;
 use SaasReady\Traits\HasUuid;
 
@@ -39,6 +40,7 @@ class Currency extends Model
     ];
 
     protected $casts = [
+        'code' => CurrencyCode::class,
         'decimals' => 'int',
         'space_after_symbol' => 'bool',
     ];

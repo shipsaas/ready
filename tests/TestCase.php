@@ -12,6 +12,11 @@ abstract class TestCase extends BaseTestCase
     use WithFaker;
     use DatabaseTransactions;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
+
     protected function getPackageProviders($app): array
     {
         return [
@@ -24,7 +29,7 @@ abstract class TestCase extends BaseTestCase
         $migrationFiles = glob(__DIR__ . '/../src/Database/Migrations/*.php');
 
         foreach ($migrationFiles as $migrationFile) {
-            $migrateInstance = include($migrationFile);
+            $migrateInstance = include $migrationFile;
             $migrateInstance->up();
         }
     }
