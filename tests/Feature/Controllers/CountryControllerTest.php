@@ -10,21 +10,21 @@ class CountryControllerTest extends TestCase
 {
     public function testIndexEndpointReturnsAllCurrencies()
     {
-        $currency = Country::factory()->count(2)->create();
+        $countries = Country::factory()->count(2)->create();
 
         $this->json('GET', 'saas/countries')
             ->assertOk()
             ->assertJsonFragment([
-                'uuid' => $currency[0]->uuid,
+                'uuid' => $countries[0]->uuid,
             ])
             ->assertJsonFragment([
-                'uuid' => $currency[1]->uuid,
+                'uuid' => $countries[1]->uuid,
             ]);
     }
 
     public function testIndexEndpointReturnsPaginatedCurrencies()
     {
-        $currency = Country::factory()->count(2)->sequence(
+        $countries = Country::factory()->count(2)->sequence(
             [
                 'code' => CountryCode::SINGAPORE,
                 'name' => 'Singapore',
@@ -42,10 +42,10 @@ class CountryControllerTest extends TestCase
         ])
             ->assertOk()
             ->assertJsonFragment([
-                'uuid' => $currency[0]->uuid,
+                'uuid' => $countries[0]->uuid,
             ])
             ->assertJsonMissing([
-                'uuid' => $currency[1]->uuid,
+                'uuid' => $countries[1]->uuid,
             ]);
 
         $this->json('GET', 'saas/countries', [
@@ -55,10 +55,10 @@ class CountryControllerTest extends TestCase
         ])
             ->assertOk()
             ->assertJsonFragment([
-                'uuid' => $currency[1]->uuid,
+                'uuid' => $countries[1]->uuid,
             ])
             ->assertJsonMissing([
-                'uuid' => $currency[0]->uuid,
+                'uuid' => $countries[0]->uuid,
             ]);
     }
 
@@ -70,12 +70,12 @@ class CountryControllerTest extends TestCase
 
     public function testShowEndpointCurrencyByUuid()
     {
-        $currency = Country::factory()->create();
+        $country = Country::factory()->create();
 
-        $this->json('GET', 'saas/countries/' . $currency->uuid)
+        $this->json('GET', 'saas/countries/' . $country->uuid)
             ->assertOk()
             ->assertJsonFragment([
-                'uuid' => $currency->uuid,
+                'uuid' => $country->uuid,
             ]);
     }
 
@@ -98,11 +98,11 @@ class CountryControllerTest extends TestCase
 
     public function testUpdateEndpointUpdatesTheRecord()
     {
-        $currency = Country::factory()->create([
+        $country = Country::factory()->create([
             'code' => CountryCode::UNITED_STATES,
         ]);
 
-        $this->json('PUT', 'saas/countries/' . $currency->uuid, [
+        $this->json('PUT', 'saas/countries/' . $country->uuid, [
             'code' => CountryCode::VIETNAM->value,
             'name' => 'Vietnam',
             'dial_code' => '+84',
@@ -110,11 +110,11 @@ class CountryControllerTest extends TestCase
         ])
             ->assertOk();
 
-        $updatedCurrency = $currency->fresh();
+        $updatedCountry = $country->fresh();
 
-        $this->assertSame($currency->id, $updatedCurrency->id);
-        $this->assertNotSame($currency->code, $updatedCurrency->code);
-        $this->assertNotSame($currency->name, $updatedCurrency->name);
+        $this->assertSame($country->id, $updatedCountry->id);
+        $this->assertNotSame($country->code, $updatedCountry->code);
+        $this->assertNotSame($country->name, $updatedCountry->name);
 
         $this->assertDatabaseMissing((new Country())->getTable(), [
             'code' => CountryCode::UNITED_STATES->value,
@@ -130,13 +130,13 @@ class CountryControllerTest extends TestCase
 
     public function testDestroyEndpointDeletesTheRecord()
     {
-        $currency = Country::factory()->create();
+        $country = Country::factory()->create();
 
-        $this->json('DELETE', 'saas/countries/' . $currency->uuid)
+        $this->json('DELETE', 'saas/countries/' . $country->uuid)
             ->assertOk();
 
-        $this->assertSoftDeleted($currency->getTable(), [
-            'id' => $currency->id,
+        $this->assertSoftDeleted($country->getTable(), [
+            'id' => $country->id,
         ]);
     }
 }
