@@ -20,7 +20,7 @@ class CurrencyController extends Controller
 
         return CurrencyResource::collection(
             $request->wantsPagination()
-                ? $currencies->paginate()
+                ? $currencies->paginate($request->getLimit())
                 : $currencies->get()
         )->toResponse($request);
     }

@@ -13,13 +13,9 @@ class CurrencyFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => $this->faker->randomElement([
-                CurrencyCode::VIETNAM_DONG,
-                CurrencyCode::UNITED_STATES_DOLLAR,
-                CurrencyCode::SINGAPORE_DOLLAR,
-            ]),
+            'code' => $this->faker->randomElement(CurrencyCode::cases()),
             'symbol' => '$',
-            'name' => 'Currency',
+            'name' => $this->faker->name(),
             'decimal_separator' => '.',
             'thousands_separator' => ',',
             'space_after_symbol' => true,

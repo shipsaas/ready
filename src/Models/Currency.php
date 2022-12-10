@@ -35,8 +35,12 @@ class Currency extends Model
 
     protected $fillable = [
         'code',
-        'iso3_code',
         'name',
+        'symbol',
+        'thousands_separator',
+        'decimals',
+        'decimal_separator',
+        'space_after_symbol',
     ];
 
     protected $casts = [
