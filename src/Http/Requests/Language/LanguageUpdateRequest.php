@@ -4,7 +4,7 @@ namespace SaasReady\Http\Requests\Language;
 
 use Illuminate\Validation\Rule;
 use SaasReady\Http\Requests\BaseFormRequest;
-use SaasReady\Models\Country;
+use SaasReady\Models\Language;
 
 class LanguageUpdateRequest extends BaseFormRequest
 {
@@ -21,17 +21,15 @@ class LanguageUpdateRequest extends BaseFormRequest
                 'string',
                 'min:2',
                 'max:2',
-                Rule::unique((new Country())->getTable(), 'code')
-                    ->whereNot('code', $this->getCountry()->code->value),
+                Rule::unique((new Language())->getTable(), 'code')
+                    ->whereNot('code', $this->getLanguage()->code->value),
             ],
             'name' => 'nullable|string',
-            'continent' => 'nullable|string',
-            'dial_code' => 'nullable|string|starts_with:+',
         ];
     }
 
-    public function getCountry(): Country
+    public function getLanguage(): Language
     {
-        return $this->route('country');
+        return $this->route('language');
     }
 }

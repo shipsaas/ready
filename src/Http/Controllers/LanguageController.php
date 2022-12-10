@@ -16,7 +16,8 @@ class LanguageController extends Controller
 {
     public function index(LanguageIndexRequest $request): JsonResponse
     {
-        $languages = Language::orderBy('name');
+        $languages = Language::orderBy('name')
+            ->when($request->wantsActiveLanguages(), fn ($query) => $query->whereNotNull('activated_at'));
 
         return LanguageResource::collection(
             $request->wantsPagination()

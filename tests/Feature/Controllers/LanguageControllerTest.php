@@ -10,61 +10,83 @@ class LanguageControllerTest extends TestCase
 {
     public function testIndexEndpointReturnsAllCurrencies()
     {
-        $currency = Language::factory()->count(2)->create();
+        $languages = Language::factory()->count(2)->create();
 
-        $this->json('GET', 'saas/countries')
+        $this->json('GET', 'saas/languages')
             ->assertOk()
             ->assertJsonFragment([
-                'uuid' => $currency[0]->uuid,
+                'uuid' => $languages[0]->uuid,
             ])
             ->assertJsonFragment([
-                'uuid' => $currency[1]->uuid,
+                'uuid' => $languages[1]->uuid,
             ]);
     }
 
-    public function testIndexEndpointReturnsPaginatedCurrencies()
+    public function testIndexEndpointReturnsActiveCurrencies()
     {
-        $currency = Language::factory()->count(2)->sequence(
+        $languages = Language::factory()->count(2)->sequence(
             [
-                'code' => LanguageCode::VIETNAMESE,
-                'name' => 'Singapore',
+                'activated_at' => now(),
             ],
             [
-                'code' => LanguageCode::ENGLISH,
-                'name' => 'Vietnam',
+                'activated_at' => null,
             ]
         )->create();
 
-        $this->json('GET', 'saas/countries', [
+        $this->json('GET', 'saas/languages', ['is_active' => 1])
+            ->assertOk()
+            ->assertJsonFragment([
+                'uuid' => $languages[0]->uuid,
+            ])
+            ->assertJsonMissing([
+                'uuid' => $languages[1]->uuid,
+            ]);
+    }
+
+
+    public function testIndexEndpointReturnsPaginatedCurrencies()
+    {
+        $languages = Language::factory()->count(2)->sequence(
+            [
+                'code' => LanguageCode::ENGLISH,
+                'name' => 'English',
+            ],
+            [
+                'code' => LanguageCode::VIETNAMESE,
+                'name' => 'Vietnamese',
+            ],
+        )->create();
+
+        $this->json('GET', 'saas/languages', [
             'type' => 'paginated',
             'limit' => 1,
             'page' => 1,
         ])
             ->assertOk()
             ->assertJsonFragment([
-                'uuid' => $currency[0]->uuid,
+                'uuid' => $languages[0]->uuid,
             ])
             ->assertJsonMissing([
-                'uuid' => $currency[1]->uuid,
+                'uuid' => $languages[1]->uuid,
             ]);
 
-        $this->json('GET', 'saas/countries', [
+        $this->json('GET', 'saas/languages', [
             'type' => 'paginated',
             'limit' => 1,
             'page' => 2,
         ])
             ->assertOk()
             ->assertJsonFragment([
-                'uuid' => $currency[1]->uuid,
+                'uuid' => $languages[1]->uuid,
             ])
             ->assertJsonMissing([
-                'uuid' => $currency[0]->uuid,
+                'uuid' => $languages[0]->uuid,
             ]);
     }
 
     public function testShowEndpointReturnsNotFound()
     {
-        $this->json('GET', 'saas/countries/' . $this->faker->uuid)
+        $this->json('GET', 'saas/languages/' . $this->faker->uuid)
             ->assertNotFound();
     }
 
@@ -72,7 +94,7 @@ class LanguageControllerTest extends TestCase
     {
         $currency = Language::factory()->create();
 
-        $this->json('GET', 'saas/countries/' . $currency->uuid)
+        $this->json('GET', 'saas/languages/' . $currency->uuid)
             ->assertOk()
             ->assertJsonFragment([
                 'uuid' => $currency->uuid,
@@ -81,62 +103,54 @@ class LanguageControllerTest extends TestCase
 
     public function testStoreEndpointCreateNewRecord()
     {
-        $this->json('POST', 'saas/countries/', [
-            'code' => LanguageCode::UNITED_STATES->value,
-            'name' => 'United States',
-            'dial_code' => '+1',
-            'continent' => 'North America',
+        $this->json('POST', 'saas/languages/', [
+            'code' => LanguageCode::ENGLISH->value,
+            'name' => 'English',
         ])->assertCreated();
 
-        $this->assertDatabaseHas((new Country())->getTable(), [
-            'code' => LanguageCode::UNITED_STATES->value,
-            'name' => 'United States',
-            'dial_code' => '+1',
-            'continent' => 'North America',
+        $this->assertDatabaseHas((new Language())->getTable(), [
+            'code' => LanguageCode::ENGLISH->value,
+            'name' => 'English',
         ]);
     }
 
     public function testUpdateEndpointUpdatesTheRecord()
     {
-        $currency = Language::factory()->create([
-            'code' => LanguageCode::UNITED_STATES,
+        $language = Language::factory()->create([
+            'code' => LanguageCode::ENGLISH->value,
+            'name' => 'English',
         ]);
 
-        $this->json('PUT', 'saas/countries/' . $currency->uuid, [
-            'code' => LanguageCode::VIETNAM->value,
-            'name' => 'Vietnam',
-            'dial_code' => '+84',
-            'continent' => 'SEA',
-        ])
-            ->assertOk();
+        $this->json('PUT', 'saas/languages/' . $language->uuid, [
+            'code' => LanguageCode::VIETNAMESE->value,
+            'name' => 'Vietnamese',
+        ])->assertOk();
 
-        $updatedCurrency = $currency->fresh();
+        $updatedLanguage = $language->fresh();
 
-        $this->assertSame($currency->id, $updatedCurrency->id);
-        $this->assertNotSame($currency->code, $updatedCurrency->code);
-        $this->assertNotSame($currency->name, $updatedCurrency->name);
+        $this->assertSame($language->id, $updatedLanguage->id);
+        $this->assertNotSame($language->code, $updatedLanguage->code);
+        $this->assertNotSame($language->name, $updatedLanguage->name);
 
-        $this->assertDatabaseMissing((new Country())->getTable(), [
-            'code' => LanguageCode::UNITED_STATES->value,
+        $this->assertDatabaseMissing($language->getTable(), [
+            'code' => LanguageCode::ENGLISH->value,
         ]);
 
-        $this->assertDatabaseHas((new Country())->getTable(), [
-            'code' => LanguageCode::VIETNAM->value,
-            'name' => 'Vietnam',
-            'dial_code' => '+84',
-            'continent' => 'SEA',
+        $this->assertDatabaseHas($language->getTable(), [
+            'code' => LanguageCode::VIETNAMESE->value,
+            'name' => 'Vietnamese',
         ]);
     }
 
     public function testDestroyEndpointDeletesTheRecord()
     {
-        $currency = Language::factory()->create();
+        $language = Language::factory()->create();
 
-        $this->json('DELETE', 'saas/countries/' . $currency->uuid)
+        $this->json('DELETE', 'saas/languages/' . $language->uuid)
             ->assertOk();
 
-        $this->assertSoftDeleted($currency->getTable(), [
-            'id' => $currency->id,
+        $this->assertSoftDeleted($language->getTable(), [
+            'id' => $language->id,
         ]);
     }
 }

@@ -4,7 +4,7 @@ namespace SaasReady\Http\Requests\Language;
 
 use Illuminate\Validation\Rule;
 use SaasReady\Http\Requests\BaseFormRequest;
-use SaasReady\Models\Country;
+use SaasReady\Models\Language;
 
 class LanguageStoreRequest extends BaseFormRequest
 {
@@ -21,11 +21,9 @@ class LanguageStoreRequest extends BaseFormRequest
                 'string',
                 'min:2',
                 'max:2',
-                Rule::unique((new Country())->getTable(), 'code'),
+                Rule::unique((new Language())->getTable(), 'code'),
             ],
             'name' => 'required|string',
-            'continent' => 'required|string',
-            'dial_code' => 'required|string|starts_with:+',
         ];
     }
 }
