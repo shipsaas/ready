@@ -1,8 +1,9 @@
 <?php
 
-namespace SaasReady\Http\Requests;
+namespace SaasReady\Http\Requests\Currency;
 
 use Illuminate\Validation\Rule;
+use SaasReady\Http\Requests\BaseFormRequest;
 use SaasReady\Models\Currency;
 
 class CurrencyStoreRequest extends BaseFormRequest

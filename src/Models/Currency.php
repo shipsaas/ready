@@ -12,7 +12,7 @@ use SaasReady\Traits\HasUuid;
 
 /**
  * @property-read int $id
- * @property string $code
+ * @property CurrencyCode $code
  * @property string $name
  * @property string $symbol
  * @property int $decimals
@@ -48,4 +48,9 @@ class Currency extends Model
         'decimals' => 'int',
         'space_after_symbol' => 'bool',
     ];
+
+    public static function findByCode(CurrencyCode $code): ?static
+    {
+        return static::whereCode($code)->first();
+    }
 }

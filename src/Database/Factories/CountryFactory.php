@@ -3,6 +3,7 @@
 namespace SaasReady\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use SaasReady\Constants\CountryCode;
 use SaasReady\Models\Country;
 
 class CountryFactory extends Factory
@@ -12,7 +13,10 @@ class CountryFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'code' => $this->faker->randomElement(CountryCode::cases()),
+            'continent' => $this->faker->name(),
+            'name' => $this->faker->country(),
+            'dial_code' => '+' . $this->faker->numberBetween(1, 999),
         ];
     }
 }

@@ -2,17 +2,17 @@
 
 namespace SaasReady\Tests\Feature\Controllers;
 
-use SaasReady\Constants\CurrencyCode;
-use SaasReady\Models\Currency;
+use SaasReady\Constants\CountryCode;
+use SaasReady\Models\Country;
 use SaasReady\Tests\TestCase;
 
-class CurrencyControllerTest extends TestCase
+class CountryControllerTest extends TestCase
 {
     public function testIndexEndpointReturnsAllCurrencies()
     {
-        $currency = Currency::factory()->count(2)->create();
+        $currency = Country::factory()->count(2)->create();
 
-        $this->json('GET', 'saas/currencies')
+        $this->json('GET', 'saas/countries')
             ->assertOk()
             ->assertJsonFragment([
                 'uuid' => $currency[0]->uuid,
@@ -24,18 +24,18 @@ class CurrencyControllerTest extends TestCase
 
     public function testIndexEndpointReturnsPaginatedCurrencies()
     {
-        $currency = Currency::factory()->count(2)->sequence(
+        $currency = Country::factory()->count(2)->sequence(
             [
-                'code' => CurrencyCode::SINGAPORE_DOLLAR,
+                'code' => CountryCode::SINGAPORE,
                 'name' => 'Singapore',
             ],
             [
-                'code' => CurrencyCode::ZIMBABWEAN_DOLLAR,
-                'name' => 'Zimbabwe',
+                'code' => CountryCode::VIETNAM,
+                'name' => 'Vietnam',
             ]
         )->create();
 
-        $this->json('GET', 'saas/currencies', [
+        $this->json('GET', 'saas/countries', [
             'type' => 'paginated',
             'limit' => 1,
             'page' => 1,
@@ -48,7 +48,7 @@ class CurrencyControllerTest extends TestCase
                 'uuid' => $currency[1]->uuid,
             ]);
 
-        $this->json('GET', 'saas/currencies', [
+        $this->json('GET', 'saas/countries', [
             'type' => 'paginated',
             'limit' => 1,
             'page' => 2,
@@ -64,15 +64,15 @@ class CurrencyControllerTest extends TestCase
 
     public function testShowEndpointReturnsNotFound()
     {
-        $this->json('GET', 'saas/currencies/' . $this->faker->uuid)
+        $this->json('GET', 'saas/countries/' . $this->faker->uuid)
             ->assertNotFound();
     }
 
     public function testShowEndpointCurrencyByUuid()
     {
-        $currency = Currency::factory()->create();
+        $currency = Country::factory()->create();
 
-        $this->json('GET', 'saas/currencies/' . $currency->uuid)
+        $this->json('GET', 'saas/countries/' . $currency->uuid)
             ->assertOk()
             ->assertJsonFragment([
                 'uuid' => $currency->uuid,
@@ -81,31 +81,32 @@ class CurrencyControllerTest extends TestCase
 
     public function testStoreEndpointCreateNewRecord()
     {
-        $this->json('POST', 'saas/currencies/', [
-            'code' => CurrencyCode::UNITED_STATES_DOLLAR->value,
-            'name' => 'US Dollar',
-            'symbol' => '$',
-            'thousands_separator' => ',',
-            'decimal_separator' => '.',
-            'decimals' => '2',
-            'space_after_symbol' => 1,
+        $this->json('POST', 'saas/countries/', [
+            'code' => CountryCode::UNITED_STATES->value,
+            'name' => 'United States',
+            'dial_code' => '+1',
+            'continent' => 'North America',
         ])->assertCreated();
 
-        $this->assertDatabaseHas((new Currency())->getTable(), [
-            'code' => CurrencyCode::UNITED_STATES_DOLLAR->value,
-            'name' => 'US Dollar',
+        $this->assertDatabaseHas((new Country())->getTable(), [
+            'code' => CountryCode::UNITED_STATES->value,
+            'name' => 'United States',
+            'dial_code' => '+1',
+            'continent' => 'North America',
         ]);
     }
 
     public function testUpdateEndpointUpdatesTheRecord()
     {
-        $currency = Currency::factory()->create([
-            'code' => CurrencyCode::UNITED_STATES_DOLLAR,
+        $currency = Country::factory()->create([
+            'code' => CountryCode::UNITED_STATES,
         ]);
 
-        $this->json('PUT', 'saas/currencies/' . $currency->uuid, [
-            'code' => CurrencyCode::VIETNAMESE_DONG->value,
-            'name' => 'Vietnamese Dong',
+        $this->json('PUT', 'saas/countries/' . $currency->uuid, [
+            'code' => CountryCode::VIETNAM->value,
+            'name' => 'Vietnam',
+            'dial_code' => '+84',
+            'continent' => 'SEA',
         ])
             ->assertOk();
 
@@ -115,21 +116,23 @@ class CurrencyControllerTest extends TestCase
         $this->assertNotSame($currency->code, $updatedCurrency->code);
         $this->assertNotSame($currency->name, $updatedCurrency->name);
 
-        $this->assertDatabaseMissing((new Currency())->getTable(), [
-            'code' => CurrencyCode::UNITED_STATES_DOLLAR->value,
+        $this->assertDatabaseMissing((new Country())->getTable(), [
+            'code' => CountryCode::UNITED_STATES->value,
         ]);
 
-        $this->assertDatabaseHas((new Currency())->getTable(), [
-            'code' => CurrencyCode::VIETNAMESE_DONG->value,
-            'name' => 'Vietnamese Dong',
+        $this->assertDatabaseHas((new Country())->getTable(), [
+            'code' => CountryCode::VIETNAM->value,
+            'name' => 'Vietnam',
+            'dial_code' => '+84',
+            'continent' => 'SEA',
         ]);
     }
 
     public function testDestroyEndpointDeletesTheRecord()
     {
-        $currency = Currency::factory()->create();
+        $currency = Country::factory()->create();
 
-        $this->json('DELETE', 'saas/currencies/' . $currency->uuid)
+        $this->json('DELETE', 'saas/countries/' . $currency->uuid)
             ->assertOk();
 
         $this->assertSoftDeleted($currency->getTable(), [

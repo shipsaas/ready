@@ -14,7 +14,6 @@ return new class () extends Migration {
 
             $table->uuid()->unique();
             $table->string('code', 2)->unique();
-            $table->string('alpha3_code', 3)->unique();
 
             $table->string('continent', 50);
             $table->string('name', 100);

@@ -23,13 +23,12 @@ class CountryResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'code' => $this->code,
+            'alpha3_code' => $this->alpha3_code,
             'name' => $this->name,
+            'continent' => $this->continent,
             'dial_code' => $this->dial_code,
-            'currency' => new CurrencyResource($this->whenLoaded('currency')),
-            'is_active' => $this->is_active,
-            'risk_level' => $this->risk_level,
             'created_at' => $this->created_at?->toDateTimeString(),
-            'updated_at' => $this->isHighRisk(),
+            'updated_at' => $this->updated_at?->toDateTimeString(),
         ];
     }
 }

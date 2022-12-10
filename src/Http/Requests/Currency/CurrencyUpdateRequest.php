@@ -1,8 +1,9 @@
 <?php
 
-namespace SaasReady\Http\Requests;
+namespace SaasReady\Http\Requests\Currency;
 
 use Illuminate\Validation\Rule;
+use SaasReady\Http\Requests\BaseFormRequest;
 use SaasReady\Models\Currency;
 
 class CurrencyUpdateRequest extends BaseFormRequest
@@ -21,7 +22,7 @@ class CurrencyUpdateRequest extends BaseFormRequest
                 'min:3',
                 'max:3',
                 Rule::unique((new Currency())->getTable(), 'code')
-                    ->whereNot('code', $this->route('currency')),
+                    ->whereNot('code', $this->getCurrency()->code->value),
             ],
             'name' => 'nullable|string',
             'symbol' => 'nullable|string',
@@ -38,5 +39,10 @@ class CurrencyUpdateRequest extends BaseFormRequest
             'decimals' => 'nullable|int|min:0|max:6',
             'space_after_symbol' => 'nullable|bool',
         ];
+    }
+
+    public function getCurrency(): Currency
+    {
+        return $this->route('currency');
     }
 }

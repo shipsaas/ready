@@ -1,8 +1,10 @@
 <?php
 
-namespace SaasReady\Http\Requests;
+namespace SaasReady\Http\Requests\Country;
 
-class CurrencyIndexRequest extends BaseFormRequest
+use SaasReady\Http\Requests\BaseFormRequest;
+
+class CountryIndexRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {

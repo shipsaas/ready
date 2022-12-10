@@ -4,11 +4,11 @@ namespace SaasReady\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use SaasReady\Http\Requests\CurrencyDestroyRequest;
-use SaasReady\Http\Requests\CurrencyIndexRequest;
-use SaasReady\Http\Requests\CurrencyShowRequest;
-use SaasReady\Http\Requests\CurrencyStoreRequest;
-use SaasReady\Http\Requests\CurrencyUpdateRequest;
+use SaasReady\Http\Requests\Currency\CurrencyDestroyRequest;
+use SaasReady\Http\Requests\Currency\CurrencyIndexRequest;
+use SaasReady\Http\Requests\Currency\CurrencyShowRequest;
+use SaasReady\Http\Requests\Currency\CurrencyStoreRequest;
+use SaasReady\Http\Requests\Currency\CurrencyUpdateRequest;
 use SaasReady\Http\Responses\CurrencyResource;
 use SaasReady\Models\Currency;
 

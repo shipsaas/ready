@@ -12,8 +12,7 @@ use SaasReady\Traits\HasUuid;
 
 /**
  * @property-read int $id
- * @property string $code
- * @property string $alpha3_code
+ * @property CountryCode $code
  * @property string $continent
  * @property string $name
  * @property string $dial_code
@@ -33,7 +32,6 @@ class Country extends Model
 
     protected $fillable = [
         'code',
-        'alpha3_code',
         'continent',
         'name',
         'dial_code',
@@ -42,4 +40,9 @@ class Country extends Model
     protected $casts = [
         'code' => CountryCode::class,
     ];
+
+    public static function findByCode(CountryCode $code): ?static
+    {
+        return static::whereCode($code)->first();
+    }
 }
