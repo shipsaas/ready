@@ -8,9 +8,16 @@ use SaasReady\Tests\TestCase;
 
 class LanguageControllerTest extends TestCase
 {
-    public function testIndexEndpointReturnsAllCurrencies()
+    public function testIndexEndpointReturnsAllLanguages()
     {
-        $languages = Language::factory()->count(2)->create();
+        $languages = Language::factory()->count(2)->sequence(
+            [
+                'code' => LanguageCode::ENGLISH,
+            ],
+            [
+                'code' => LanguageCode::VIETNAMESE,
+            ]
+        )->create();
 
         $this->json('GET', 'saas/languages')
             ->assertOk()
@@ -22,13 +29,15 @@ class LanguageControllerTest extends TestCase
             ]);
     }
 
-    public function testIndexEndpointReturnsActiveCurrencies()
+    public function testIndexEndpointReturnsActiveLanguages()
     {
         $languages = Language::factory()->count(2)->sequence(
             [
+                'code' => LanguageCode::ENGLISH,
                 'activated_at' => now(),
             ],
             [
+                'code' => LanguageCode::GERMAN,
                 'activated_at' => null,
             ]
         )->create();
@@ -44,7 +53,7 @@ class LanguageControllerTest extends TestCase
     }
 
 
-    public function testIndexEndpointReturnsPaginatedCurrencies()
+    public function testIndexEndpointReturnsPaginatedLanguages()
     {
         $languages = Language::factory()->count(2)->sequence(
             [
