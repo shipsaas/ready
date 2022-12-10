@@ -1,7 +1,7 @@
 # ShipSaaS Ready - Your SaaS companion
 
 [![Build & Test](https://github.com/shipsaas/ready/actions/workflows/build.yml/badge.svg)](https://github.com/shipsaas/ready/actions/workflows/build.yml)
-[ coverage info here]
+[![codecov](https://codecov.io/gh/shipsaas/ready/branch/main/graph/badge.svg?token=9GZ7DKTBIJ)](https://codecov.io/gh/shipsaas/ready)
 
 Starting to build a new freaking SaaS product and deliver great features? 
 
