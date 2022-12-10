@@ -1,8 +1,10 @@
 <?php
 
-namespace SaasReady\Http\Requests;
+namespace SaasReady\Http\Requests\Currency;
 
-class CurrencyShowRequest extends BaseFormRequest
+use SaasReady\Http\Requests\BaseFormRequest;
+
+class CurrencyDestroyRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {

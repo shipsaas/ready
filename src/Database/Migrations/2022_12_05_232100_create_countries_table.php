@@ -13,14 +13,14 @@ return new class () extends Migration {
             $table->increments('id');
 
             $table->uuid()->unique();
-            $table->string('code')->unique();
-            $table->string('alpha3_code')->unique();
+            $table->string('code', 2)->unique();
 
-            $table->string('continent');
-            $table->string('name');
-            $table->string('dial_code');
+            $table->string('continent', 50);
+            $table->string('name', 100);
+            $table->string('dial_code', 10);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

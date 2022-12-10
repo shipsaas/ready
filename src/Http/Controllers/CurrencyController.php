@@ -4,8 +4,11 @@ namespace SaasReady\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use SaasReady\Http\Requests\CurrencyIndexRequest;
-use SaasReady\Http\Requests\CurrencyShowRequest;
+use SaasReady\Http\Requests\Currency\CurrencyDestroyRequest;
+use SaasReady\Http\Requests\Currency\CurrencyIndexRequest;
+use SaasReady\Http\Requests\Currency\CurrencyShowRequest;
+use SaasReady\Http\Requests\Currency\CurrencyStoreRequest;
+use SaasReady\Http\Requests\Currency\CurrencyUpdateRequest;
 use SaasReady\Http\Responses\CurrencyResource;
 use SaasReady\Models\Currency;
 
@@ -17,7 +20,7 @@ class CurrencyController extends Controller
 
         return CurrencyResource::collection(
             $request->wantsPagination()
-                ? $currencies->paginate()
+                ? $currencies->paginate($request->getLimit())
                 : $currencies->get()
         )->toResponse($request);
     }
@@ -27,18 +30,28 @@ class CurrencyController extends Controller
         return (new CurrencyResource($currency))->toResponse($request);
     }
 
-    public function store(): JsonResponse
+    public function store(CurrencyStoreRequest $request): JsonResponse
     {
-        return new JsonResponse();
+        $currency = Currency::create($request->validated());
+
+        return new JsonResponse([
+            'uuid' => $currency->uuid,
+        ], 201);
     }
 
-    public function update(): JsonResponse
+    public function update(CurrencyUpdateRequest $request, Currency $currency): JsonResponse
     {
-        return new JsonResponse();
+        $currency->update($request->validated());
+
+        return new JsonResponse([
+            'uuid' => $currency->uuid,
+        ]);
     }
 
-    public function destroy(): JsonResponse
+    public function destroy(CurrencyDestroyRequest $request, Currency $currency): JsonResponse
     {
+        $currency->delete();
+
         return new JsonResponse();
     }
 }

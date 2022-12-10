@@ -28,4 +28,29 @@ return [
         'countries' => true,
         'languages' => true,
     ],
+
+    /**
+     * Event sourcing configurations
+     */
+    'event-sourcing' => [
+        /**
+         * If turned on, the listener will be pushed to Queue
+         * By default, it will run on current thead
+         */
+        'should-queue' => false,
+
+        /**
+         * Queue Name config (->onQueue(...))
+         *
+         * `null` for default
+         */
+        'queue-name' => null,
+
+        /**
+         * Queue Connection config (->onConnection(...))
+         *
+         * `null` for default
+         */
+        'queue-connection' => null,
+    ],
 ];

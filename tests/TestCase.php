@@ -12,6 +12,11 @@ abstract class TestCase extends BaseTestCase
     use WithFaker;
     use DatabaseTransactions;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
+
     protected function getPackageProviders($app): array
     {
         return [
@@ -21,10 +26,14 @@ abstract class TestCase extends BaseTestCase
 
     protected function getEnvironmentSetUp($app): void
     {
-        $migrationFiles = glob(__DIR__ . '/../src/Database/Migrations/*.php');
+        // prefer this way, because we will have some migrations that seed the data for tables
+        $migrationFiles = [
+            __DIR__ . '/../src/Database/Migrations/2022_12_05_232100_create_countries_table.php',
+            __DIR__ . '/../src/Database/Migrations/2022_12_06_151600_create_currencies_table.php',
+        ];
 
         foreach ($migrationFiles as $migrationFile) {
-            $migrateInstance = include($migrationFile);
+            $migrateInstance = include $migrationFile;
             $migrateInstance->up();
         }
     }

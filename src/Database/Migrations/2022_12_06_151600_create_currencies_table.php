@@ -13,15 +13,16 @@ return new class () extends Migration {
             $table->increments('id');
             $table->uuid()->unique();
 
-            $table->string('code')->unique();
-            $table->string('name');
-            $table->string('symbol');
+            $table->string('code', 3)->unique();
+            $table->string('name', 100);
+            $table->string('symbol', 10);
             $table->unsignedInteger('decimals')->default(0);
-            $table->char('decimal_separator');
-            $table->char('thousands_separator');
+            $table->char('decimal_separator', 1);
+            $table->char('thousands_separator', 1);
             $table->boolean('space_after_symbol');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
