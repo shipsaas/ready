@@ -3,6 +3,7 @@
 namespace SaasReady;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -15,6 +16,8 @@ class SaasServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        AboutCommand::add('ShipSaaS/Ready', fn () => ['Version' => '0.0.1']);
+
         $this->mergeConfigFrom(__DIR__ . '/Configs/saas-ready.php', 'saas-ready');
 
         $this->publishes([
