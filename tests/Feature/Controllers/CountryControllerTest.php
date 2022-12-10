@@ -8,9 +8,18 @@ use SaasReady\Tests\TestCase;
 
 class CountryControllerTest extends TestCase
 {
-    public function testIndexEndpointReturnsAllCurrencies()
+    public function testIndexEndpointReturnsAllCountries()
     {
-        $countries = Country::factory()->count(2)->create();
+        $countries = Country::factory()->count(2)->sequence(
+            [
+                'code' => CountryCode::SINGAPORE,
+                'name' => 'Singapore',
+            ],
+            [
+                'code' => CountryCode::VIETNAM,
+                'name' => 'Vietnam',
+            ]
+        )->create();
 
         $this->json('GET', 'saas/countries')
             ->assertOk()
@@ -22,7 +31,7 @@ class CountryControllerTest extends TestCase
             ]);
     }
 
-    public function testIndexEndpointReturnsPaginatedCurrencies()
+    public function testIndexEndpointReturnsPaginatedCountries()
     {
         $countries = Country::factory()->count(2)->sequence(
             [

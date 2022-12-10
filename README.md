@@ -2,6 +2,8 @@
 
 [![Build & Test](https://github.com/shipsaas/ready/actions/workflows/build.yml/badge.svg)](https://github.com/shipsaas/ready/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/shipsaas/ready/branch/main/graph/badge.svg?token=9GZ7DKTBIJ)](https://codecov.io/gh/shipsaas/ready)
+![License of ShipSaas Ready](https://img.shields.io/github/license/shipsaas/ready)
+![Status of ShipSaas Ready](https://img.shields.io/badge/Status-WIP%2FIn--development-yellow)
 
 Starting to build a new freaking SaaS product and deliver great features? 
 
