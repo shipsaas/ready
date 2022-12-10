@@ -26,6 +26,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function getEnvironmentSetUp($app): void
     {
+        // prefer this way, because we will have some migrations that seed the data for tables
         $migrationFiles = [
             __DIR__ . '/../src/Database/Migrations/2022_12_05_232100_create_countries_table.php',
             __DIR__ . '/../src/Database/Migrations/2022_12_06_151600_create_currencies_table.php',
