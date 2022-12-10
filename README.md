@@ -1,10 +1,11 @@
-# Laravel SaaS Ready - Your SaaS companion
+# ShipSaaS Ready - Your SaaS companion
 
-[ status here ] [ coverage info here]
+[![Build & Test](https://github.com/shipsaas/ready/actions/workflows/build.yml/badge.svg)](https://github.com/shipsaas/ready/actions/workflows/build.yml)
+[ coverage info here]
 
 Starting to build a new freaking SaaS product and deliver great features? 
 
-Let Laravel SaaS Ready to become your companion along the way!
+Allow **ShipSaaS Ready** to become your companion along the way! Strong, helpful and reliable companion.
 
 It got you covered with almost every generic things, let's build awesome products on top of it.
 
@@ -21,9 +22,10 @@ PHP 8.1+
 
 ## Features
 
-Laravel SaaS Ready covers you up with all these things:
+**ShipSaaS Ready** covers you up with all these things:
 
 - Controllers
+- Constants/Enums
 - Models
 - Helpers (classes or traits)
 - Services
@@ -32,25 +34,28 @@ For all of these generic entities:
 
 - Countries (with data)
 - Currencies (with data)
-- Languages
+- Languages (with English)
 - Translations (dynamic translations)
-- Roles & Permissions (role-based)
-- Files
 - Events (event sourcing)
+- Files
+- Roles & Permissions (role-based)
 - ...
 
-Once you install the Laravel SaaS Ready, you got multiple things under your hands, let's build great & awesome products.
+Once you install the ShipSaaS Ready, you got multiple generic under your hands, let's build awesome products.
 
 ## Installation
 
 ### Install the dependency
+
+After hitting the `laravel new your-super-product`, you would install Ready immediately :wink:
+
 ```bash
 composer require sethsandaru/laravel-saas-ready
 ```
 
 ### Publish the configuration
 
-So you can add your desired configurations
+Export the `config` file to change your desired configurations of ShipSaas Ready
 
 ```bash
 php artisan vendor:publish --tag=saas-ready
@@ -64,9 +69,9 @@ php artisan migrate
 
 ### GUI
 
-Since all the things under Laravel SaaS Ready is RESTFul APIs. No GUI available.
+Since all the things under Shi[SaaS Ready is RESTFul APIs. No GUI available on this particular repository.
 
-I planned to work on the seperate project for the GUI. Coming soon as well!
+There will be a separate repository for the GUI. Stay tuned!
 
 ## Contribute to the project
 
