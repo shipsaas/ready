@@ -11,6 +11,7 @@ use SaasReady\Contracts\EventSourcingContract;
 use SaasReady\Listeners\EventSourcingListener;
 use SaasReady\Models\Country;
 use SaasReady\Models\Currency;
+use SaasReady\Models\Event as EventModel;
 
 class SaasServiceProvider extends ServiceProvider
 {
@@ -45,5 +46,6 @@ class SaasServiceProvider extends ServiceProvider
 
         Route::model('currency', Currency::class);
         Route::model('country', Country::class);
+        Route::model('event', EventModel::class);
     }
 }

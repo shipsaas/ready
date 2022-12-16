@@ -52,5 +52,12 @@ return [
          * `null` for default
          */
         'queue-connection' => null,
+
+        /**
+         * User class for relationship registration
+         *
+         * @see \SaasReady\Models\Event::user()
+         */
+        'user-model' => \Illuminate\Foundation\Auth\User::class,
     ],
 ];
