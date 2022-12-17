@@ -19,19 +19,16 @@ class EventController extends Controller
                 'model_type' => $request->getRelatedModel()->getMorphClass(),
             ])
             ->when($request->getUserId(), fn ($builder) => $builder->whereUserId($request->getUserId()))
-            ->when($request->input('load_related_model'), fn ($builder) => $builder->with(['model', 'user']));
+            ->when($request->input('load_related_model'), fn ($builder) => $builder->with(['model']));
 
-        return EventResource::collection(
-            $request->wantsPagination()
-                ? $countries->paginate($request->getLimit())
-                : $countries->get()
-        )->toResponse($request);
+        return EventResource::collection($countries->paginate($request->getLimit()))
+            ->toResponse($request);
     }
 
     public function show(EventShowRequest $request, Event $country): JsonResponse
     {
         if ($request->input('load_related_model')) {
-            $country->load(['model', 'user']);
+            $country->load(['model']);
         }
 
         return (new EventResource($country))->toResponse($request);
