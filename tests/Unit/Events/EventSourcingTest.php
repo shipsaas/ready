@@ -28,6 +28,13 @@ class EventSourcingTest extends TestCase
             'properties->code' => $language->code,
             'properties->name' => $language->name,
         ]);
+
+        $insertedEvent = EventModel::where([
+            'model_id' => $language->getKey(),
+            'model_type' => $language->getMorphClass(),
+        ])->first();
+
+        $this->assertTrue($insertedEvent->model()->first()->is($language));
     }
 
     public function testDispatchEventsWillDispatchAQueueToRecordTheEvent()
