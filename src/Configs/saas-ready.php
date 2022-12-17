@@ -27,6 +27,7 @@ return [
         'currencies' => true,
         'countries' => true,
         'languages' => true,
+        'events' => true,
     ],
 
     /**
