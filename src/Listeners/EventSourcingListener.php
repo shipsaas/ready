@@ -8,7 +8,12 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use SaasReady\Contracts\EventSourcingContract;
+use SaasReady\Models\Event;
 
+/**
+ * @method static static dispatch(EventSourcingContract $event)
+ * @method static static dispatchSync(EventSourcingContract $event)
+ */
 class EventSourcingListener implements ShouldQueue
 {
     use Dispatchable;
@@ -22,6 +27,6 @@ class EventSourcingListener implements ShouldQueue
 
     public function handle(): void
     {
-
+        Event::createFromContract($this->event);
     }
 }
