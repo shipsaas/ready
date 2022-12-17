@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use SaasReady\Contracts\EventSourcingContract;
 use SaasReady\Traits\EloquentBuilderMixin;
 use SaasReady\Traits\HasUuid;
@@ -51,8 +50,6 @@ class Event extends Model
 
     /**
      * An Event belongsTo a model
-     *
-     * @return MorphTo
      */
     public function model(): MorphTo
     {
@@ -61,8 +58,6 @@ class Event extends Model
 
     /**
      * An Event belongs to a User
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -74,10 +69,6 @@ class Event extends Model
 
     /**
      * Quickly create a new instance from Contract
-     *
-     * @param EventSourcingContract $contractor
-     *
-     * @return Event
      */
     public static function createFromContract(EventSourcingContract $contractor): Event
     {

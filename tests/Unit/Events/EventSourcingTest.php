@@ -4,7 +4,9 @@ namespace SaasReady\Tests\Unit\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
 use SaasReady\Contracts\EventSourcingContract;
+use SaasReady\Listeners\EventSourcingListener;
 use SaasReady\Models\Event as EventModel;
 use SaasReady\Models\Language;
 use SaasReady\Tests\TestCase;
@@ -26,6 +28,31 @@ class EventSourcingTest extends TestCase
             'properties->code' => $language->code,
             'properties->name' => $language->name,
         ]);
+    }
+
+    public function testDispatchEventsWillDispatchAQueueToRecordTheEvent()
+    {
+        Queue::fake([
+            EventSourcingListener::class,
+        ]);
+
+        config([
+            'saas-ready.event-sourcing.should-queue' => true,
+            'saas-ready.event-sourcing.queue-name' => 'low-priority',
+            'saas-ready.event-sourcing.queue-connection' => 'redis',
+        ]);
+
+        $language = Language::factory()->create();
+        $event = new LanguageCreated($language);
+
+        Event::dispatch($event);
+
+        Queue::assertPushedOn(
+            'low-priority',
+            EventSourcingListener::class,
+            fn (EventSourcingListener $job) => $job->event->getModel()->is($language)
+                && $job->connection === 'redis'
+        );
     }
 }
 
