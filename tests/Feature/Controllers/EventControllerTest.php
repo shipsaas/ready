@@ -68,6 +68,30 @@ class EventControllerTest extends TestCase
             ]);
     }
 
+    public function testIndexEndpointReturnsValidationErrorOnWrongSourceType()
+    {
+        $this->json('GET', 'saas/events', [
+            'limit' => 10,
+            'page' => 1,
+            'source_type' => 'lol',
+            'source_id' => 1,
+            'load_related_model' => true,
+            'user_id' => 1,
+        ])->assertJsonValidationErrorFor('source_type');
+    }
+
+    public function testIndexEndpointReturnsValidationErrorOnNonExistenceSource()
+    {
+        $this->json('GET', 'saas/events', [
+            'limit' => 10,
+            'page' => 1,
+            'source_type' => Country::class,
+            'source_id' => 99999,
+            'load_related_model' => true,
+            'user_id' => 1,
+        ])->assertJsonValidationErrorFor('source_id');
+    }
+
     public function testShowEndpointReturnsNotFound()
     {
         $this->json('GET', 'saas/events/' . $this->faker->uuid)

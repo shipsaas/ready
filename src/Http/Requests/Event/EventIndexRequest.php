@@ -52,7 +52,7 @@ class EventIndexRequest extends BaseFormRequest
         return $this->integer('user_id');
     }
 
-    public function getRelatedModel(): Model
+    public function getRelatedModel(): ?Model
     {
         return $this->source
             ??= $this->input('source_type')::find($this->input('source_id'));
