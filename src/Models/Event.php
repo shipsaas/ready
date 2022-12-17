@@ -40,6 +40,8 @@ class Event extends Model
         'user_id',
         'model_id',
         'model_type',
+        'category',
+        'properties',
     ];
 
     protected $casts = [
