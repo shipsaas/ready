@@ -34,11 +34,11 @@ PHP 8.1+
 
 For all of these generic entities:
 
-- Countries (with data)
-- Currencies (with data)
-- Languages (with English)
+- Countries (with data) - ✅
+- Currencies (with data) - ✅
+- Languages (with English) - ✅
 - Translations (dynamic translations)
-- Events (event sourcing)
+- Events (event sourcing) - ✅
 - Files
 - Roles & Permissions (role-based)
 - ...
