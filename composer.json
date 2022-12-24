@@ -39,7 +39,10 @@
     "autoload": {
         "psr-4": {
             "SaasReady\\": "src/"
-        }
+        },
+        "files": [
+            "src/Functions/saas-functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

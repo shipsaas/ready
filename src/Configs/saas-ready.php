@@ -61,4 +61,21 @@ return [
          */
         'user-model' => \Illuminate\Foundation\Auth\User::class,
     ],
+
+    /**
+     * Translation configurations
+     */
+    'translation' => [
+        /**
+         * Available:
+         * - single: will do "select ... where key = ... limit 1"
+         * - all: will do ->all()
+         */
+        'strategy' => 'single',
+
+        /**
+         * Set true to use
+         */
+        'should-cache' => false,
+    ],
 ];

@@ -40,8 +40,6 @@ For all of these generic entities:
 - Translations (dynamic translations)
 - Events (event sourcing) - ✅
 - Files
-- Roles & Permissions (role-based)
-- ...
 
 Once you install the ShipSaaS Ready, you got multiple generic under your hands, let's build awesome products.
 
