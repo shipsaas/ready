@@ -30,7 +30,7 @@ class DatabaseTranslationRepository implements TranslationRepositoryContract
             $translation = Translation::findByKey($key, ['translations']);
             $this->translations[$key] = $translation?->translations[$this->langCode] ?? $key;
 
-            return $translation[$key];
+            return $this->translations[$key];
         }
 
         return $key;
