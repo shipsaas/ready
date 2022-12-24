@@ -34,11 +34,11 @@ PHP 8.1+
 
 For all of these generic entities:
 
-- Countries (with data) - ✅
-- Currencies (with data) - ✅
-- Languages (with English) - ✅
+- Countries (with data)
+- Currencies (with data)
+- Languages (with English)
 - Translations (dynamic translations)
-- Events (event sourcing) - ✅
+- Events (event sourcing)
 - Files
 
 Once you install the ShipSaaS Ready, you got multiple generic under your hands, let's build awesome products.
@@ -50,7 +50,7 @@ Once you install the ShipSaaS Ready, you got multiple generic under your hands, 
 After hitting the `laravel new your-super-product`, you would install Ready immediately :wink:
 
 ```bash
-composer require sethsandaru/laravel-saas-ready
+composer require shipsaas/ready
 ```
 
 ### Publish the configuration
