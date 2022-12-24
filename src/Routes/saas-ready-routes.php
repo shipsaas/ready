@@ -35,6 +35,6 @@ Route::prefix(config('saas-ready.route-prefix'))
         }
 
         if (config('saas-ready.route-enabled.translations')) {
-            Route::resource('languages', TranslationController::class);
+            Route::resource('translations', TranslationController::class);
         }
     });

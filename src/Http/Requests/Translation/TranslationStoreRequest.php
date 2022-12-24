@@ -5,6 +5,7 @@ namespace SaasReady\Http\Requests\Translation;
 use Illuminate\Validation\Rule;
 use SaasReady\Http\Requests\BaseFormRequest;
 use SaasReady\Models\Translation;
+use SaasReady\Rules\TranslationValuesRule;
 
 class TranslationStoreRequest extends BaseFormRequest
 {
@@ -19,12 +20,13 @@ class TranslationStoreRequest extends BaseFormRequest
             'key' => [
                 'required',
                 'string',
-                'min:2',
-                'max:2',
                 Rule::unique((new Translation())->getTable(), 'key'),
             ],
             'label' => 'required|string',
-            'translations' => 'required|array',
+            'translations' => [
+                'required',
+                app(TranslationValuesRule::class),
+            ],
         ];
     }
 }

@@ -16,7 +16,7 @@ class TranslationController extends Controller
 {
     public function index(TranslationIndexRequest $request): JsonResponse
     {
-        $translations = Translation::orderBy('id', 'DESC')
+        $translations = Translation::query()
             ->when($request->getSearchKeyword(), fn ($q) => $q->filterByKeyword($request->getSearchKeyword()))
             ->paginate($request->getLimit());
 
@@ -35,7 +35,7 @@ class TranslationController extends Controller
 
         return new JsonResponse([
             'uuid' => $translation->uuid,
-        ]);
+        ], 201);
     }
 
     public function update(TranslationUpdateRequest $request, Translation $translation): JsonResponse

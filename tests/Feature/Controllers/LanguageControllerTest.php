@@ -99,7 +99,7 @@ class LanguageControllerTest extends TestCase
             ->assertNotFound();
     }
 
-    public function testShowEndpointCurrencyByUuid()
+    public function testShowEndpointLanguageByUuid()
     {
         $currency = Language::factory()->create();
 

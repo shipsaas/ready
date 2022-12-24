@@ -5,6 +5,7 @@ namespace SaasReady\Http\Requests\Translation;
 use Illuminate\Validation\Rule;
 use SaasReady\Http\Requests\BaseFormRequest;
 use SaasReady\Models\Translation;
+use SaasReady\Rules\TranslationValuesRule;
 
 class TranslationUpdateRequest extends BaseFormRequest
 {
@@ -23,7 +24,10 @@ class TranslationUpdateRequest extends BaseFormRequest
                     ->whereNot('key', $this->getTranslation()->key),
             ],
             'label' => 'required|string',
-            'translations' => 'required|array',
+            'translations' => [
+                'required',
+                app(TranslationValuesRule::class),
+            ],
         ];
     }
 
