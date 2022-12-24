@@ -26,6 +26,34 @@ class TranslationControllerTest extends TestCase
             ]);
     }
 
+    public function testIndexEndpointFilterByKeyword()
+    {
+        $translations = Translation::factory()
+            ->count(3)
+            ->sequence(
+                ['label' => 'Seth Tran'],
+                ['label' => 'Seth Phat'],
+                ['translations' => ['en' => 'Seth Tran nek']],
+            )
+            ->create();
+
+        $this->json('GET', 'saas/translations', [
+            'limit' => 10,
+            'page' => 1,
+            'search' => 'Seth Tran',
+        ])
+            ->assertOk()
+            ->assertJsonFragment([
+                'uuid' => $translations[0]->uuid,
+            ])
+            ->assertJsonFragment([
+                'uuid' => $translations[2]->uuid,
+            ])
+            ->assertJsonMissing([
+                'uuid' => $translations[1]->uuid,
+            ]);
+    }
+
     public function testShowEndpointReturnsNotFound()
     {
         $this->json('GET', 'saas/translations/' . $this->faker->uuid)
@@ -62,6 +90,12 @@ class TranslationControllerTest extends TestCase
 
     public function testStoreEndpointCreateFailedDueToInvalidTranslationFormat()
     {
+        $this->json('POST', 'saas/translations', [
+            'key' => 'seth.phat',
+            'label' => 'Seth Phat',
+            'translations' => 'wrong-type-for-this',
+        ])->assertJsonValidationErrorFor('translations');
+
         $this->json('POST', 'saas/translations', [
             'key' => 'seth.phat',
             'label' => 'Seth Phat',

@@ -49,7 +49,7 @@ class Translation extends Model
     public function scopeFilterByKeyword(Builder $builder, string $keyword): Builder
     {
         return $builder->where(function (Builder $builder) use ($keyword) {
-            $builder->where('key', 'LIKE', '%' . $keyword . '%')
+            $builder->orWhere('key', 'LIKE', '%' . $keyword . '%')
                 ->orWhere('label', 'LIKE', '%' . $keyword . '%')
                 ->orWhere('translations', 'LIKE', '%' . $keyword . '%');
         });

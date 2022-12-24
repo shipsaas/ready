@@ -87,5 +87,8 @@ class DatabaseTranslationRepositoryTest extends TestCase
         $this->assertCount(2, $translations);
         $this->assertArrayHasKey('hello-world', $translations);
         $this->assertArrayHasKey('how-are-you', $translations);
+
+        // access with non-exists key would return the same key
+        $this->assertSame('hello-world-abc', $repo->getTranslation('hello-world-abc'));
     }
 }
