@@ -49,8 +49,18 @@ class Currency extends Model
         'space_after_symbol' => 'bool',
     ];
 
+    /**
+     * A global hashmap to cache the `findByCode` - shortage cache.
+     * [
+     *  'USD' => Currency of USD,
+     *  ...
+     * ]
+     */
+    public static array $currencyCaches = [];
+
     public static function findByCode(CurrencyCode $code): ?static
     {
-        return static::whereCode($code)->first();
+        return static::$currencyCaches[$code->value]
+            ??= static::whereCode($code)->first();
     }
 }
