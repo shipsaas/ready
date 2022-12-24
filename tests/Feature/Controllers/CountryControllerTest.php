@@ -77,7 +77,7 @@ class CountryControllerTest extends TestCase
             ->assertNotFound();
     }
 
-    public function testShowEndpointCurrencyByUuid()
+    public function testShowEndpointCountryByUuid()
     {
         $country = Country::factory()->create();
 

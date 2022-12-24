@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use SaasReady\Contracts\EventSourcingContract;
+use SaasReady\Contracts\TranslationRepositoryContract;
 use SaasReady\Listeners\EventSourcingListener;
 use SaasReady\Models\Country;
 use SaasReady\Models\Currency;
 use SaasReady\Models\Event as EventModel;
+use SaasReady\Models\Translation;
+use SaasReady\Services\TranslationRepositories\CacheTranslationRepository;
+use SaasReady\Services\TranslationRepositories\DatabaseTranslationRepository;
 
 class SaasServiceProvider extends ServiceProvider
 {
@@ -47,5 +51,20 @@ class SaasServiceProvider extends ServiceProvider
         Route::model('currency', Currency::class);
         Route::model('country', Country::class);
         Route::model('event', EventModel::class);
+        Route::model('translation', Translation::class);
+    }
+
+    public function register(): void
+    {
+        $this->app->singleton(DatabaseTranslationRepository::class);
+        $this->app->singleton(CacheTranslationRepository::class);
+
+        $this->app->bind(TranslationRepositoryContract::class, function () {
+            if (config('saas-ready.translation.should-cache')) {
+                return $this->app->make(CacheTranslationRepository::class);
+            }
+
+            return $this->app->make(DatabaseTranslationRepository::class);
+        });
     }
 }

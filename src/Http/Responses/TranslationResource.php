@@ -4,19 +4,20 @@ namespace SaasReady\Http\Responses;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use SaasReady\Models\Language;
+use SaasReady\Models\Translation;
 
 /**
- * @mixin Language
+ * @mixin Translation
  */
-class LanguageResource extends JsonResource
+class TranslationResource extends JsonResource
 {
     public function toArray($request): array
     {
         return [
             'uuid' => $this->uuid,
-            'code' => $this->code,
-            'name' => $this->name,
+            'key' => $this->key,
+            'label' => $this->label,
+            'translations' => $this->translations,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
         ];
