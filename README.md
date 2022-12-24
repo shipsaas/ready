@@ -7,9 +7,9 @@
 
 Starting to build a new freaking SaaS product and deliver great features? 
 
-Allow **ShipSaaS Ready** to become your companion along the way! Strong, helpful and reliable companion.
+Allow **ShipSaaS Ready** to become your companion along the way! A strong, helpful and reliable companion.
 
-It got you covered with almost every generic things, let's build awesome products on top of it.
+It got you covered with almost every generic (and must-have) things, let's build awesome products on top of it.
 
 Documentation: (coming soon)
 
@@ -20,6 +20,7 @@ Documentation: (coming soon)
 - Laravel 10.x (upcoming)
 
 ### PHP
+
 PHP 8.1+
 
 ## Features
@@ -41,7 +42,7 @@ For all of these generic entities:
 - Events (event sourcing)
 - Files
 
-Once you install the ShipSaaS Ready, you got multiple generic under your hands, let's build awesome products.
+Once you install the ShipSaaS Ready, you got multiple generic entities under your hands, let's build awesome products.
 
 ## Installation
 
@@ -67,26 +68,29 @@ php artisan vendor:publish --tag=saas-ready
 php artisan migrate
 ```
 
-### GUI
+## GUI / Web Interface
 
-Since all the things under Shi[SaaS Ready is RESTFul APIs. No GUI available on this particular repository.
+Since all the things under ShiSaaS Ready is **RESTFul APIs**. No GUI available on this particular repository.
 
 There will be a separate repository for the GUI. Stay tuned!
 
 ## Contribute to the project
 
-- All changes must follow PSR-1 / PSR-12 coding conventions
-- Unit testing is a must, cover things as much as you can
+- All changes must follow PSR-1 / PSR-12 coding conventions.
+- Unit testing is a must, cover things as much as you can.
 
-### Maintainers
+## This library is useful?
+
+Thank you, please give it a ⭐️⭐️⭐️ to support the project.
+
+Don't forget to share with your friends & colleagues, so they can also build their own SaaS products as well 🚀
+
+### Maintainers & Contributors
 
 - Seth Phat
-- ??
-
-### Contributors
 
 Join me :wink:
 
 ## License
 
-Copyright &copy; by Seth Phat 2022 - Under MIT License.
+Copyright &copy; by Seth Phat / ShipSaaS 2022 - Under MIT License.
