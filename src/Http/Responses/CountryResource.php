@@ -11,19 +11,11 @@ use SaasReady\Models\Country;
  */
 class CountryResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'uuid' => $this->uuid,
             'code' => $this->code,
-            'alpha3_code' => $this->alpha3_code,
             'name' => $this->name,
             'continent' => $this->continent,
             'dial_code' => $this->dial_code,

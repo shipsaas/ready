@@ -13,6 +13,7 @@ use SaasReady\Listeners\EventSourcingListener;
 use SaasReady\Models\Country;
 use SaasReady\Models\Currency;
 use SaasReady\Models\Event as EventModel;
+use SaasReady\Models\Translation;
 use SaasReady\Services\TranslationRepositories\CacheTranslationRepository;
 use SaasReady\Services\TranslationRepositories\DatabaseTranslationRepository;
 
@@ -50,6 +51,7 @@ class SaasServiceProvider extends ServiceProvider
         Route::model('currency', Currency::class);
         Route::model('country', Country::class);
         Route::model('event', EventModel::class);
+        Route::model('translation', Translation::class);
     }
 
     public function register(): void

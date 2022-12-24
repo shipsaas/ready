@@ -11,14 +11,7 @@ use SaasReady\Models\Event;
  */
 class EventResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'uuid' => $this->uuid,

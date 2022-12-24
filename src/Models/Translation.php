@@ -3,6 +3,7 @@
 namespace SaasReady\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,6 +18,8 @@ use SaasReady\Traits\HasUuid;
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
  * @property ?Carbon $deleted_at
+ *
+ * @method static Builder|static filterByKeyword(string $keyword)
  *
  * @mixin EloquentBuilderMixin
  */
@@ -41,5 +44,14 @@ class Translation extends Model
     public static function findByKey(string $key, array $columns = ['*']): ?static
     {
         return static::where('key', $key)->first($columns);
+    }
+
+    public function scopeFilterByKeyword(Builder $builder, string $keyword): Builder
+    {
+        return $builder->where(function (Builder $builder) use ($keyword) {
+            $builder->where('key', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('label', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('translations', 'LIKE', '%' . $keyword . '%');
+        });
     }
 }
