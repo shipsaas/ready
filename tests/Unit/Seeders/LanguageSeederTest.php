@@ -28,5 +28,10 @@ class LanguageSeederTest extends TestCase
             'code' => LanguageCode::ENGLISH_AUSTRALIA,
             'name' => 'English (Australia)',
         ]);
+
+        // to ensure every enum would be computed normally fine
+        Language::all()->each(
+            fn (Language $language) => $this->assertInstanceOf(LanguageCode::class, $language->code)
+        );
     }
 }

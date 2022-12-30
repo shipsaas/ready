@@ -33,7 +33,10 @@ class LanguageController extends Controller
 
     public function store(LanguageStoreRequest $request): JsonResponse
     {
-        $currency = Language::create($request->validated());
+        $currency = Language::create([
+            ...$request->validated(),
+            'activated_at' => $request->boolean('is_active') ? now() : null,
+        ]);
 
         return new JsonResponse([
             'uuid' => $currency->uuid,
@@ -42,7 +45,10 @@ class LanguageController extends Controller
 
     public function update(LanguageUpdateRequest $request, Language $language): JsonResponse
     {
-        $language->update($request->validated());
+        $language->update([
+            ...$request->validated(),
+            'activated_at' => $request->boolean('is_active') ? now() : null,
+        ]);
 
         return new JsonResponse([
             'uuid' => $language->uuid,

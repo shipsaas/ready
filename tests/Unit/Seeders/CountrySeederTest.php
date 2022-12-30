@@ -23,5 +23,9 @@ class CountrySeederTest extends TestCase
             'code' => CountryCode::UNITED_STATES,
             'name' => 'United States',
         ]);
+
+        // to ensure every enum would be computed normally fine
+        Country::all()
+            ->each(fn (Country $country) => $this->assertInstanceOf(CountryCode::class, $country->code));
     }
 }

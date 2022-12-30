@@ -24,6 +24,7 @@ class LanguageStoreRequest extends BaseFormRequest
                 Rule::unique((new Language())->getTable(), 'code'),
             ],
             'name' => 'required|string',
+            'is_active' => 'required|bool',
         ];
     }
 }
