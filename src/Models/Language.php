@@ -17,6 +17,7 @@ use SaasReady\Traits\HasUuid;
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
  * @property ?Carbon $deleted_at
+ * @property ?Carbon $activated_at
  *
  * @mixin EloquentBuilderMixin
  */
@@ -31,6 +32,7 @@ class Language extends Model
     protected $fillable = [
         'code',
         'name',
+        'activated_at',
     ];
 
     protected $casts = [

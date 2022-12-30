@@ -17,6 +17,8 @@ class LanguageResource extends JsonResource
             'uuid' => $this->uuid,
             'code' => $this->code,
             'name' => $this->name,
+            'is_active' => (bool) $this->activated_at,
+            'activated_at' => $this->activated_at?->toDateString(),
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
         ];

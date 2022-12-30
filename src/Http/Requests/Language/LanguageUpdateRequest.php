@@ -25,6 +25,7 @@ class LanguageUpdateRequest extends BaseFormRequest
                     ->whereNot('code', $this->getLanguage()->code->value),
             ],
             'name' => 'nullable|string',
+            'is_active' => 'required|bool',
         ];
     }
 
