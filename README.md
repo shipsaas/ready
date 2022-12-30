@@ -11,7 +11,7 @@ Allow **ShipSaaS Ready** to become your companion along the way! A strong, helpf
 
 It got you covered with almost every generic (and must-have) things, let's build awesome products on top of it.
 
-Documentation: (coming soon)
+[Documentation Here](https://phattranminh96.gitbook.io/shipsaas-ready/)
 
 ## Support
 
