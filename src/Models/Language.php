@@ -37,6 +37,7 @@ class Language extends Model
 
     protected $casts = [
         'code' => LanguageCode::class,
+        'activated_at' => 'datetime',
     ];
 
     public static function findByCode(LanguageCode $code): ?static

@@ -112,14 +112,18 @@ class LanguageControllerTest extends TestCase
 
     public function testStoreEndpointCreateNewRecord()
     {
+        $this->travelTo('2022-10-23 10:00:59');
+
         $this->json('POST', 'saas/languages/', [
             'code' => LanguageCode::ENGLISH->value,
             'name' => 'English',
+            'is_active' => true,
         ])->assertCreated();
 
         $this->assertDatabaseHas((new Language())->getTable(), [
             'code' => LanguageCode::ENGLISH->value,
             'name' => 'English',
+            'activated_at' => '2022-10-23 10:00:59',
         ]);
     }
 
@@ -128,11 +132,13 @@ class LanguageControllerTest extends TestCase
         $language = Language::factory()->create([
             'code' => LanguageCode::ENGLISH->value,
             'name' => 'English',
+            'activated_at' => now(),
         ]);
 
         $this->json('PUT', 'saas/languages/' . $language->uuid, [
             'code' => LanguageCode::VIETNAMESE->value,
             'name' => 'Vietnamese',
+            'is_active' => false,
         ])->assertOk();
 
         $updatedLanguage = $language->fresh();
@@ -140,6 +146,7 @@ class LanguageControllerTest extends TestCase
         $this->assertSame($language->id, $updatedLanguage->id);
         $this->assertNotSame($language->code, $updatedLanguage->code);
         $this->assertNotSame($language->name, $updatedLanguage->name);
+        $this->assertNull($updatedLanguage->activated_at);
 
         $this->assertDatabaseMissing($language->getTable(), [
             'code' => LanguageCode::ENGLISH->value,
