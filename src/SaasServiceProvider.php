@@ -21,7 +21,7 @@ class SaasServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        AboutCommand::add('ShipSaaS/Ready', fn () => ['Version' => '0.0.1']);
+        AboutCommand::add('ShipSaaS/Ready', fn () => ['Version' => '1.0.0']);
 
         $this->mergeConfigFrom(__DIR__ . '/Configs/saas-ready.php', 'saas-ready');
 
