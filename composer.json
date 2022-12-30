@@ -1,7 +1,8 @@
 {
-    "name": "sethsandaru/laravel-saas-ready",
+    "name": "shipsaas/ready",
     "type": "library",
-    "description": "Build up your next freaking SaaS with a great companion along the way",
+    "version": "1.0.0",
+    "description": "Build up your next freaking SaaS with a great companion (lib) along the way",
     "keywords": [
         "laravel library",
         "laravel saas",

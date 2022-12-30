@@ -33,14 +33,13 @@ PHP 8.1+
 - Helpers (classes or traits)
 - Services
 
-For all of these generic entities:
+For all of these generic entities (more coming uppp 🥳):
 
 - Countries (with data)
 - Currencies (with data)
 - Languages (with English)
 - Translations (dynamic translations)
 - Events (event sourcing)
-- Files
 
 Once you install the ShipSaaS Ready, you got multiple generic entities under your hands, let's build awesome products.
 
@@ -90,6 +89,10 @@ Don't forget to share with your friends & colleagues, so they can also build the
 - Seth Phat
 
 Join me :wink:
+
+## ChangeLog
+
+Visit: [CHANGELOG](./CHANGELOG.md)
 
 ## License
 
