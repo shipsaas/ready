@@ -37,6 +37,7 @@ class CurrencyStoreRequest extends BaseFormRequest
             ],
             'decimals' => 'required|int|min:0|max:6',
             'space_after_symbol' => 'required|bool',
+            'is_active' => 'nullable|bool',
         ];
     }
 }

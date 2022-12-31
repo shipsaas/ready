@@ -20,8 +20,10 @@ class CurrencyResource extends JsonResource
             'decimal_separator' => $this->decimal_separator,
             'thousands_separator' => $this->thousands_separator,
             'space_after_symbol' => $this->space_after_symbol,
+            'is_active' => (bool) $this->activated_at,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
+            'activated_at' => $this->activated_at?->toDateTimeString(),
         ];
     }
 }

@@ -16,7 +16,8 @@ class CurrencyController extends Controller
 {
     public function index(CurrencyIndexRequest $request): JsonResponse
     {
-        $currencies = Currency::orderBy('name');
+        $currencies = Currency::orderBy('name')
+            ->when($request->wantsActivated(), fn ($q) => $q->whereNotNull('activated_at'));
 
         return CurrencyResource::collection(
             $request->wantsPagination()
@@ -32,7 +33,10 @@ class CurrencyController extends Controller
 
     public function store(CurrencyStoreRequest $request): JsonResponse
     {
-        $currency = Currency::create($request->validated());
+        $currency = Currency::create([
+            ...$request->validated(),
+            'activated_at' => $request->boolean('is_active') ? now() : null,
+        ]);
 
         return new JsonResponse([
             'uuid' => $currency->uuid,
@@ -41,7 +45,10 @@ class CurrencyController extends Controller
 
     public function update(CurrencyUpdateRequest $request, Currency $currency): JsonResponse
     {
-        $currency->update($request->validated());
+        $currency->update([
+            ...$request->validated(),
+            'activated_at' => $request->boolean('is_active') ? now() : null,
+        ]);
 
         return new JsonResponse([
             'uuid' => $currency->uuid,

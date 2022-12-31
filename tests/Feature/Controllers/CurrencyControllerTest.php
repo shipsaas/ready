@@ -62,6 +62,25 @@ class CurrencyControllerTest extends TestCase
             ]);
     }
 
+    public function testIndexEndpointReturnsActivatedCurrencies()
+    {
+        $currency = Currency::factory()->count(2)
+            ->sequence(
+                ['activated_at' => now()],
+                ['activated_at' => null],
+            )
+            ->create();
+
+        $this->json('GET', 'saas/currencies', ['is_active' => true])
+            ->assertOk()
+            ->assertJsonFragment([
+                'uuid' => $currency[0]->uuid,
+            ])
+            ->assertJsonMissing([
+                'uuid' => $currency[1]->uuid,
+            ]);
+    }
+
     public function testShowEndpointReturnsNotFound()
     {
         $this->json('GET', 'saas/currencies/' . $this->faker->uuid)
@@ -81,6 +100,8 @@ class CurrencyControllerTest extends TestCase
 
     public function testStoreEndpointCreateNewRecord()
     {
+        $this->travelTo('2022-10-10 10:00:00');
+
         $this->json('POST', 'saas/currencies/', [
             'code' => CurrencyCode::UNITED_STATES_DOLLAR->value,
             'name' => 'US Dollar',
@@ -89,11 +110,18 @@ class CurrencyControllerTest extends TestCase
             'decimal_separator' => '.',
             'decimals' => '2',
             'space_after_symbol' => 1,
+            'is_active' => true,
         ])->assertCreated();
 
         $this->assertDatabaseHas((new Currency())->getTable(), [
             'code' => CurrencyCode::UNITED_STATES_DOLLAR->value,
             'name' => 'US Dollar',
+            'symbol' => '$',
+            'thousands_separator' => ',',
+            'decimal_separator' => '.',
+            'decimals' => '2',
+            'space_after_symbol' => 1,
+            'activated_at' => '2022-10-10 10:00:00',
         ]);
     }
 
@@ -101,11 +129,13 @@ class CurrencyControllerTest extends TestCase
     {
         $currency = Currency::factory()->create([
             'code' => CurrencyCode::UNITED_STATES_DOLLAR,
+            'activated_at' => now(),
         ]);
 
         $this->json('PUT', 'saas/currencies/' . $currency->uuid, [
             'code' => CurrencyCode::VIETNAMESE_DONG->value,
             'name' => 'Vietnamese Dong',
+            'is_active' => false,
         ])
             ->assertOk();
 
@@ -114,6 +144,7 @@ class CurrencyControllerTest extends TestCase
         $this->assertSame($currency->id, $updatedCurrency->id);
         $this->assertNotSame($currency->code, $updatedCurrency->code);
         $this->assertNotSame($currency->name, $updatedCurrency->name);
+        $this->assertNull($updatedCurrency->activated_at);
 
         $this->assertDatabaseMissing((new Currency())->getTable(), [
             'code' => CurrencyCode::UNITED_STATES_DOLLAR->value,
