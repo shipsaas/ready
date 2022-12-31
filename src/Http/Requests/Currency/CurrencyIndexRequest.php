@@ -22,4 +22,9 @@ class CurrencyIndexRequest extends BaseFormRequest
     {
         return $this->input('limit') ?: 10;
     }
+
+    public function wantsActivated(): bool
+    {
+        return $this->boolean('is_active');
+    }
 }

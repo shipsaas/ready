@@ -38,6 +38,7 @@ class CurrencyUpdateRequest extends BaseFormRequest
             ],
             'decimals' => 'nullable|int|min:0|max:6',
             'space_after_symbol' => 'nullable|bool',
+            'is_active' => 'nullable|bool',
         ];
     }
 

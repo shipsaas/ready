@@ -22,6 +22,7 @@ use SaasReady\Traits\HasUuid;
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
  * @property ?Carbon $deleted_at
+ * @property ?Carbon $activated_at
  *
  * @mixin EloquentBuilderMixin
  */
@@ -41,12 +42,14 @@ class Currency extends Model
         'decimals',
         'decimal_separator',
         'space_after_symbol',
+        'activated_at',
     ];
 
     protected $casts = [
         'code' => CurrencyCode::class,
         'decimals' => 'int',
         'space_after_symbol' => 'bool',
+        'activated_at' => 'datetime',
     ];
 
     /**
