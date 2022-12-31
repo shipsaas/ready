@@ -21,7 +21,8 @@ It got you covered with almost every generic (and must-have) things, let's build
 
 ### PHP
 
-PHP 8.1+
+- 8.1
+- 8.2
 
 ## Features
 
