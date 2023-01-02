@@ -28,7 +28,7 @@ class SaasServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/Configs/saas-ready.php', 'saas-ready');
 
         $this->publishes([
-            __DIR__ . '/Configs/saas-ready.php',
+            __DIR__ . '/Configs/saas-ready.php' => config_path('saas-ready.php'),
         ], 'saas-ready');
 
         $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');

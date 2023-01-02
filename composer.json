@@ -1,13 +1,14 @@
 {
     "name": "shipsaas/ready",
     "type": "library",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Build up your next freaking SaaS with a great companion (lib) along the way",
     "keywords": [
         "laravel library",
         "laravel saas",
         "laravel saas ready",
-        "laravel saas ready generic components for your application"
+        "laravel saas ready generic components for your application",
+        "laravel saas ready generic entities for your application"
     ],
     "authors": [
         {
