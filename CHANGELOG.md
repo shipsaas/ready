@@ -6,6 +6,9 @@
   - `saas-ready:deactivate-entity {entity} {code}`: To deactivate an Entity
 - Added `activated_at` for `currencies` table.
 
+### Upgrade notes
+- `php artisan migrate`
+
 ## 1.0.0 (Initial Release)
 
 🚀 ShipSaaS Ready initial release ships:
