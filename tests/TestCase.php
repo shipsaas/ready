@@ -5,6 +5,7 @@ namespace SaasReady\Tests;
 use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use SaasReady\Models\Currency;
 use SaasReady\SaasServiceProvider;
 
 abstract class TestCase extends BaseTestCase
@@ -15,6 +16,8 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Currency::$currencyCaches = [];
     }
 
     protected function getPackageProviders($app): array

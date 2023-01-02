@@ -7,6 +7,8 @@ use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use SaasReady\Commands\ActivateEntityCommand;
+use SaasReady\Commands\DeactivateEntityCommand;
 use SaasReady\Contracts\EventSourcingContract;
 use SaasReady\Contracts\TranslationRepositoryContract;
 use SaasReady\Listeners\EventSourcingListener;
@@ -31,6 +33,7 @@ class SaasServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
         $this->loadRoutesFrom(__DIR__ . '/Routes/saas-ready-routes.php');
+        $this->loadArtisanCommands();
 
         Event::listen(EventSourcingContract::class, function (EventSourcingContract $event) {
             if (!config('saas-ready.event-sourcing.should-queue')) {
@@ -66,5 +69,17 @@ class SaasServiceProvider extends ServiceProvider
 
             return $this->app->make(DatabaseTranslationRepository::class);
         });
+    }
+
+    private function loadArtisanCommands(): void
+    {
+        if (!$this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->commands([
+            ActivateEntityCommand::class,
+            DeactivateEntityCommand::class,
+        ]);
     }
 }
