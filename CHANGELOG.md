@@ -1,6 +1,9 @@
 # Changelog of ShipSaaS Ready
 
-## 1.0.1
+## v1.0.2
+- Fixed issue when exporting the config file went wrong.
+
+## v1.0.1
 - Added 2 commands:
   - `saas-ready:activate-entity {entity} {code}`: To activate an Entity
   - `saas-ready:deactivate-entity {entity} {code}`: To deactivate an Entity
@@ -9,7 +12,7 @@
 ### Upgrade notes
 - `php artisan migrate`
 
-## 1.0.0 (Initial Release)
+## v1.0.0 (Initial Release)
 
 🚀 ShipSaaS Ready initial release ships:
 
