@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use SaasReady\Database\Factories\TranslationFactory;
 use SaasReady\Traits\EloquentBuilderMixin;
 use SaasReady\Traits\HasUuid;
 
@@ -53,5 +54,13 @@ class Translation extends Model
                 ->orWhere('label', 'LIKE', '%' . $keyword . '%')
                 ->orWhere('translations', 'LIKE', '%' . $keyword . '%');
         });
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected static function newFactory(): TranslationFactory
+    {
+        return TranslationFactory::new();
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use SaasReady\Constants\CountryCode;
+use SaasReady\Database\Factories\CountryFactory;
 use SaasReady\Traits\EloquentBuilderMixin;
 use SaasReady\Traits\HasUuid;
 
@@ -44,5 +45,13 @@ class Country extends Model
     public static function findByCode(CountryCode $code): ?static
     {
         return static::whereCode($code)->first();
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected static function newFactory(): CountryFactory
+    {
+        return CountryFactory::new();
     }
 }
