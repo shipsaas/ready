@@ -1,5 +1,8 @@
 # Changelog of ShipSaaS Ready
 
+## v1.0.4
+- Removed unused code
+
 ## v1.0.3
 - Fixed issue when SaaS Ready overwrote all Factory classes
 

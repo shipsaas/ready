@@ -47,12 +47,6 @@ class SaasServiceProvider extends ServiceProvider
                 ->onConnection(config('saas-ready.event-sourcing.queue-connection'));
         });
 
-        Factory::guessFactoryNamesUsing(function (string $modelName) {
-            if (!str_contains())
-
-            return 'SaasReady\\Database\\Factories\\' . class_basename($modelName) . 'Factory';
-        });
-
         Route::model('currency', Currency::class);
         Route::model('country', Country::class);
         Route::model('event', EventModel::class);
