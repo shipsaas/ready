@@ -48,6 +48,8 @@ class SaasServiceProvider extends ServiceProvider
         });
 
         Factory::guessFactoryNamesUsing(function (string $modelName) {
+            if (!str_contains())
+
             return 'SaasReady\\Database\\Factories\\' . class_basename($modelName) . 'Factory';
         });
 

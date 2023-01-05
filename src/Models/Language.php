@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use SaasReady\Constants\LanguageCode;
+use SaasReady\Database\Factories\LanguageFactory;
 use SaasReady\Traits\EloquentBuilderMixin;
 use SaasReady\Traits\HasUuid;
 
@@ -43,5 +44,13 @@ class Language extends Model
     public static function findByCode(LanguageCode $code): ?static
     {
         return static::whereCode($code)->first();
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected static function newFactory(): LanguageFactory
+    {
+        return LanguageFactory::new();
     }
 }

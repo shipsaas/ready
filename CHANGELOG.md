@@ -1,5 +1,8 @@
 # Changelog of ShipSaaS Ready
 
+## v1.0.3
+- Fixed issue when SaaS Ready overwrote all Factory classes
+
 ## v1.0.2
 - Fixed issue when exporting the config file went wrong.
 

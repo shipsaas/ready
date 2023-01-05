@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use SaasReady\Constants\CurrencyCode;
+use SaasReady\Database\Factories\CurrencyFactory;
 use SaasReady\Traits\EloquentBuilderMixin;
 use SaasReady\Traits\HasUuid;
 
@@ -65,5 +66,13 @@ class Currency extends Model
     {
         return static::$currencyCaches[$code->value]
             ??= static::whereCode($code)->first();
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected static function newFactory(): CurrencyFactory
+    {
+        return CurrencyFactory::new();
     }
 }
