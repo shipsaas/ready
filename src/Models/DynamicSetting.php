@@ -40,7 +40,7 @@ class DynamicSetting extends Model
 
     public function getSetting(string $key, mixed $fallback = null): mixed
     {
-        return $this->settings[$key] ?? $fallback;
+        return data_get($this->settings, $key, $fallback);
     }
 
     public static function getGlobal(): ?static

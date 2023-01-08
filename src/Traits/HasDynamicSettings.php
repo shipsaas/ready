@@ -31,7 +31,7 @@ trait HasDynamicSettings
      * - First level: current instance
      * - Fallback level: global instance
      */
-    public function getSettingWithGlobalFallback(string $key, mixed $fallback = null): mixed
+    public function getMultiLevelsSetting(string $key, mixed $fallback = null): mixed
     {
         return $this->dynamicSetting?->getSetting($key, $fallback)
             ?? DynamicSetting::getGlobal()?->getSetting($key, $fallback)
