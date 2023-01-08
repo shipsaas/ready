@@ -2,8 +2,10 @@
 
 namespace SaasReady\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use SaasReady\Database\Factories\DynamicSettingFactory;
 use SaasReady\Traits\EloquentBuilderMixin;
 use SaasReady\Traits\HasUuid;
 
@@ -20,6 +22,7 @@ use SaasReady\Traits\HasUuid;
 class DynamicSetting extends Model
 {
     use HasUuid;
+    use HasFactory;
 
     protected $table = 'dynamic_settings';
 
@@ -48,5 +51,13 @@ class DynamicSetting extends Model
         return static::whereNull('model_id')
             ->whereNull('model_id')
             ->first();
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected static function newFactory(): DynamicSettingFactory
+    {
+        return DynamicSettingFactory::new();
     }
 }
