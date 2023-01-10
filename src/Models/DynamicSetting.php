@@ -36,6 +36,8 @@ class DynamicSetting extends Model
         'settings' => 'array',
     ];
 
+    public static ?DynamicSetting $globalSettingShortage = null;
+
     public function model(): MorphTo
     {
         return $this->morphTo('model');
@@ -48,8 +50,15 @@ class DynamicSetting extends Model
 
     public static function getGlobal(): ?static
     {
+        if (config('saas-ready.dynamic-settings.use-shortage-cache-global')) {
+            return static::$globalSettingShortage
+                ??= static::whereNull('model_id')
+                    ->whereNull('model_type')
+                    ->first();
+        }
+
         return static::whereNull('model_id')
-            ->whereNull('model_id')
+            ->whereNull('model_type')
             ->first();
     }
 
