@@ -13,7 +13,7 @@ class CountryFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => $this->faker->randomElement(CountryCode::cases()),
+            'code' => collect(CountryCode::cases())->random(),
             'continent' => $this->faker->name(),
             'name' => $this->faker->country(),
             'dial_code' => '+' . $this->faker->numberBetween(1, 999),

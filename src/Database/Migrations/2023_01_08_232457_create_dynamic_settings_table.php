@@ -10,7 +10,7 @@ return new class () extends Migration {
         Schema::create('dynamic_settings', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
-            $table->morphs('model');
+            $table->nullableMorphs('model');
             $table->json('settings')->nullable();
 
             $table->timestamps();
