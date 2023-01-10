@@ -1,5 +1,6 @@
 <?php
 
+use SaasReady\Models\DynamicSetting;
 use SaasReady\Services\Translator;
 
 if (!function_exists('saasTrans')) {
@@ -14,5 +15,15 @@ if (!function_exists('saasTrans')) {
     function saasTrans(string $key, array $variables = []): string
     {
         return app(Translator::class)->translate($key, $variables);
+    }
+}
+
+if (!function_exists('settings')) {
+    /**
+     * Helper function to quickly get the setting (global)
+     */
+    function setting(string $key, mixed $fallback = null): mixed
+    {
+        return DynamicSetting::getGlobal()?->getSetting($key, $fallback) ?? $fallback;
     }
 }

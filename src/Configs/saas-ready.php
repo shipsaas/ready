@@ -79,4 +79,14 @@ return [
          */
         'should-cache' => false,
     ],
+
+    /**
+     * Dynamic Settings
+     */
+    'dynamic-settings' => [
+        /**
+         * Mark it to true if you want ShipSaaS Ready to do the shortage cache (request only)
+         */
+        'use-shortage-cache-global' => true,
+    ],
 ];
