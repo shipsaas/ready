@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use SaasReady\Models\Currency;
+use SaasReady\Models\DynamicSetting;
 use SaasReady\SaasServiceProvider;
 
 abstract class TestCase extends BaseTestCase
@@ -18,6 +19,7 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         Currency::$currencyCaches = [];
+        DynamicSetting::$globalSettingShortage = null;
     }
 
     protected function getPackageProviders($app): array
@@ -37,6 +39,7 @@ abstract class TestCase extends BaseTestCase
             __DIR__ . '/../src/Database/Migrations/2022_12_16_225300_create_events_table.php',
             __DIR__ . '/../src/Database/Migrations/2022_12_22_203300_create_translations_table.php',
             __DIR__ . '/../src/Database/Migrations/2022_12_31_201859_add_activated_at_to_currencies_table.php',
+            __DIR__ . '/../src/Database/Migrations/2023_01_08_232457_create_dynamic_settings_table.php',
         ];
 
         foreach ($migrationFiles as $migrationFile) {

@@ -2,7 +2,6 @@
 
 namespace SaasReady;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +13,7 @@ use SaasReady\Contracts\TranslationRepositoryContract;
 use SaasReady\Listeners\EventSourcingListener;
 use SaasReady\Models\Country;
 use SaasReady\Models\Currency;
+use SaasReady\Models\DynamicSetting;
 use SaasReady\Models\Event as EventModel;
 use SaasReady\Models\Translation;
 use SaasReady\Services\TranslationRepositories\CacheTranslationRepository;
@@ -51,6 +51,7 @@ class SaasServiceProvider extends ServiceProvider
         Route::model('country', Country::class);
         Route::model('event', EventModel::class);
         Route::model('translation', Translation::class);
+        Route::model('dynamicSetting', DynamicSetting::class);
     }
 
     public function register(): void
