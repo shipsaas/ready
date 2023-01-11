@@ -168,7 +168,7 @@ class DynamicSettingsControllerTest extends TestCase
 
     public function testDestroyEndpointDeletesTheRecord()
     {
-        $dynamicSetting = DynamicSettingMock::setSettings();
+        $dynamicSetting = DynamicSettingMock::setSettings([], Currency::factory()->create());
 
         $this->json('DELETE', 'saas/dynamic-settings/' . $dynamicSetting->uuid)
             ->assertOk();
@@ -176,5 +176,13 @@ class DynamicSettingsControllerTest extends TestCase
         $this->assertDatabaseMissing($dynamicSetting->getTable(), [
             'id' => $dynamicSetting->id,
         ]);
+    }
+
+    public function testDestroyEndpointDeletesTheGlobalReturnsError()
+    {
+        $dynamicSetting = DynamicSettingMock::setSettings([]);
+
+        $this->json('DELETE', 'saas/dynamic-settings/' . $dynamicSetting->uuid)
+            ->assertStatus(400);
     }
 }

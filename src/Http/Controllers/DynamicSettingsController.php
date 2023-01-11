@@ -62,6 +62,12 @@ class DynamicSettingsController extends Controller
 
     public function destroy(DynamicSetting $dynamicSetting): JsonResponse
     {
+        if ($dynamicSetting->model_id === null && $dynamicSetting->model_type === null) {
+            return new JsonResponse([
+                'error' => 'Global dynamic setting can not be deleted',
+            ], 400);
+        }
+
         $dynamicSetting->delete();
 
         return new JsonResponse();
