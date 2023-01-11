@@ -1,7 +1,7 @@
 {
     "name": "shipsaas/ready",
     "type": "library",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "description": "Build up your next freaking SaaS with a great companion (lib) along the way",
     "keywords": [
         "laravel library",

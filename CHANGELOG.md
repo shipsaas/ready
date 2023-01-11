@@ -1,5 +1,10 @@
 # Changelog of ShipSaaS Ready
 
+## v1.1.0
+- Entity & Service: Dynamic Setting ([documentation](https://phattranminh96.gitbook.io/shipsaas-ready/entities/dynamic-setting))
+- Fixed some small issues
+- Minor changes
+
 ## v1.0.4
 - Removed unused code
 
