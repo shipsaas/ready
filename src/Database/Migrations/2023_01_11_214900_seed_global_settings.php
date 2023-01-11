@@ -7,9 +7,10 @@ return new class () extends Migration {
     {
         DB::table('dynamic_settings')
             ->insert([
+                'uuid' => Str::orderedUuid()->toString(),
                 'model_id' => null,
                 'model_type' => null,
-                'settings' => [],
+                'settings' => '[]',
             ]);
     }
 };

@@ -1,5 +1,8 @@
 # Changelog of ShipSaaS Ready
 
+## v1.1.1
+- Fixed global dynamic setting migration
+
 ## v1.1.0
 - Entity & Service: Dynamic Setting ([documentation](https://phattranminh96.gitbook.io/shipsaas-ready/entities/dynamic-setting))
 - Fixed some small issues
