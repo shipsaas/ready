@@ -14,12 +14,9 @@ class DynamicSettingsController extends Controller
 {
     public function index(DynamicSettingIndexRequest $request): JsonResponse
     {
-        $relatedModel = $request->getRelatedModel();
-
         $dynamicSettings = DynamicSetting::orderBy('created_at', 'DESC')
-            ->when($relatedModel, fn ($q) => $q->where([
-                'model_id' => $relatedModel->getKey(),
-                'model_type' => $relatedModel->getMorphClass(),
+            ->when($request->input('source_type'), fn ($q) => $q->where([
+                'model_type' => $request->input('source_type'),
             ]))
             ->paginate($request->integer('limit') ?: 10);
 
@@ -43,7 +40,7 @@ class DynamicSettingsController extends Controller
 
         return new JsonResponse([
             'uuid' => $dynamicSetting->uuid,
-        ]);
+        ], 201);
     }
 
     public function update(

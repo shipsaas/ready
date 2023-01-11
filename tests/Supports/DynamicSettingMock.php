@@ -7,9 +7,9 @@ use SaasReady\Models\DynamicSetting;
 
 class DynamicSettingMock
 {
-    public static function setSettings(array $settings = [], ?Model $model = null): void
+    public static function setSettings(array $settings = [], ?Model $model = null): DynamicSetting
     {
-        DynamicSetting::updateOrCreate([
+        return DynamicSetting::updateOrCreate([
             'model_id' => $model?->getKey() ?? null,
             'model_type' => $model?->getMorphClass() ?? null,
         ], [

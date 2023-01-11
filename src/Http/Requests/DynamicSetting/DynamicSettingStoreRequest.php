@@ -4,6 +4,7 @@ namespace SaasReady\Http\Requests\DynamicSetting;
 
 use Illuminate\Database\Eloquent\Model;
 use SaasReady\Http\Requests\BaseFormRequest;
+use SaasReady\Rules\ClassExistsRule;
 
 class DynamicSettingStoreRequest extends BaseFormRequest
 {
@@ -15,7 +16,11 @@ class DynamicSettingStoreRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'source_type' => 'required|string',
+            'source_type' => [
+                'required',
+                'string',
+                new ClassExistsRule(),
+            ],
             'source_id' => 'required|int',
             'settings' => 'required|array',
         ];
