@@ -29,6 +29,7 @@ return [
         'languages' => true,
         'events' => true,
         'translations' => true,
+        'dynamic-settings' => true,
     ],
 
     /**
