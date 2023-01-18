@@ -14,7 +14,7 @@ use SaasReady\Models\Language;
 class ActivateEntityCommand extends Command
 {
     protected $signature = 'saas-ready:activate-entity {entity} {code}';
-    protected $description = 'Activate an entity';
+    protected $description = '[SaaS Ready] Activate an entity';
 
     public function handle(): int
     {
