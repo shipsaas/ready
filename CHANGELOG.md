@@ -1,5 +1,8 @@
 # Changelog of ShipSaaS Ready
 
+## v1.1.2
+- Added `saas-ready:render-translation {langCode}` command
+
 ## v1.1.1
 - Fixed global dynamic setting migration
 
