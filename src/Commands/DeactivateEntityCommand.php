@@ -14,7 +14,7 @@ use SaasReady\Models\Language;
 class DeactivateEntityCommand extends Command
 {
     protected $signature = 'saas-ready:deactivate-entity {entity} {code}';
-    protected $description = 'Deactivate an entity';
+    protected $description = '[SaaS Ready] Deactivate an entity';
 
     public function handle(): int
     {

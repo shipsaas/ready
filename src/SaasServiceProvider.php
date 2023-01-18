@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use SaasReady\Commands\ActivateEntityCommand;
 use SaasReady\Commands\DeactivateEntityCommand;
+use SaasReady\Commands\RenderTranslationsCommand;
 use SaasReady\Contracts\EventSourcingContract;
 use SaasReady\Contracts\TranslationRepositoryContract;
 use SaasReady\Listeners\EventSourcingListener;
@@ -77,6 +78,7 @@ class SaasServiceProvider extends ServiceProvider
         $this->commands([
             ActivateEntityCommand::class,
             DeactivateEntityCommand::class,
+            RenderTranslationsCommand::class,
         ]);
     }
 }
