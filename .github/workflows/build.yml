@@ -1,4 +1,7 @@
 name: Build & Test
+env:
+    SSH_CONFIG: ${{ secrets.TESTING_ENV }}
+
 on:
     pull_request:
         branches:
@@ -29,6 +32,7 @@ jobs:
                 run: |
                     php -v
                     composer install --no-interaction
+                    echo "$TESTING_ENV" > .env.testing
 
             -   name: PHPUnit tests with coverage
                 if: success() && github.event.pull_request.draft == false
