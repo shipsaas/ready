@@ -7,6 +7,7 @@ use SaasReady\Http\Controllers\CurrencyController;
 use SaasReady\Http\Controllers\DynamicSettingsController;
 use SaasReady\Http\Controllers\EventController;
 use SaasReady\Http\Controllers\LanguageController;
+use SaasReady\Http\Controllers\ReleaseNoteController;
 use SaasReady\Http\Controllers\TranslationController;
 
 Route::prefix(config('saas-ready.route-prefix'))
@@ -47,5 +48,11 @@ Route::prefix(config('saas-ready.route-prefix'))
             Route::resource('dynamic-settings', DynamicSettingsController::class)
                 ->except(['edit', 'create'])
                 ->parameter('dynamic-setting', 'dynamicSetting');
+        }
+
+        if (config('saas-ready.route-enabled.release-notes')) {
+            Route::resource('release-notes', ReleaseNoteController::class)
+                ->except(['edit', 'create'])
+                ->parameter('release-note', 'releaseNote');
         }
     });
