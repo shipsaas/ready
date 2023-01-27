@@ -16,22 +16,8 @@ class ReleaseNoteUpdateRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'code' => [
-                'nullable',
-                'string',
-                'min:2',
-                'max:2',
-                Rule::unique((new Country())->getTable(), 'code')
-                    ->whereNot('code', $this->getCountry()->code->value),
-            ],
-            'name' => 'nullable|string',
-            'continent' => 'nullable|string',
-            'dial_code' => 'nullable|string|starts_with:+',
+            'version' => 'required|string',
+            'note' => 'required|string',
         ];
-    }
-
-    public function getCountry(): Country
-    {
-        return $this->route('country');
     }
 }

@@ -40,6 +40,7 @@ abstract class TestCase extends BaseTestCase
             __DIR__ . '/../src/Database/Migrations/2022_12_22_203300_create_translations_table.php',
             __DIR__ . '/../src/Database/Migrations/2022_12_31_201859_add_activated_at_to_currencies_table.php',
             __DIR__ . '/../src/Database/Migrations/2023_01_08_232457_create_dynamic_settings_table.php',
+            __DIR__ . '/../src/Database/Migrations/2023_01_27_092930_create_release_notes_table.php',
         ];
 
         foreach ($migrationFiles as $migrationFile) {

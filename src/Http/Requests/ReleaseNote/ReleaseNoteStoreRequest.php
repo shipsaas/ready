@@ -16,16 +16,8 @@ class ReleaseNoteStoreRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'code' => [
-                'required',
-                'string',
-                'min:2',
-                'max:2',
-                Rule::unique((new Country())->getTable(), 'code'),
-            ],
-            'name' => 'required|string',
-            'continent' => 'required|string',
-            'dial_code' => 'required|string|starts_with:+',
+            'version' => 'required|string',
+            'note' => 'required|string',
         ];
     }
 }
