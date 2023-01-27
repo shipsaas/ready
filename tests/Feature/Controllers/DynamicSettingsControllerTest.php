@@ -2,6 +2,10 @@
 
 namespace SaasReady\Tests\Feature\Controllers;
 
+use Illuminate\Support\Facades\Event;
+use SaasReady\Events\DynamicSetting\DynamicSettingCreated;
+use SaasReady\Events\DynamicSetting\DynamicSettingDeleted;
+use SaasReady\Events\DynamicSetting\DynamicSettingUpdated;
 use SaasReady\Models\Country;
 use SaasReady\Models\Currency;
 use SaasReady\Models\DynamicSetting;
@@ -87,6 +91,8 @@ class DynamicSettingsControllerTest extends TestCase
 
     public function testStoreEndpointCreateNewRecord()
     {
+        Event::fake([DynamicSettingCreated::class]);
+
         $currency = Currency::factory()->create();
 
         $this->json('POST', 'saas/dynamic-settings', [
@@ -102,10 +108,19 @@ class DynamicSettingsControllerTest extends TestCase
             'model_type' => $currency->getMorphClass(),
             'settings->site_name' => 'Seth Phat',
         ]);
+
+        Event::assertDispatched(
+            DynamicSettingCreated::class,
+            fn (DynamicSettingCreated $event) => $event->dynamicSetting->model_id === $currency->id
+                && $event->dynamicSetting->model_type === $currency->getMorphClass()
+                && array_key_exists('site_name', $event->dynamicSetting->settings)
+        );
     }
 
     public function testUpdateEndpointUpdatesTheRecord()
     {
+        Event::fake([DynamicSettingUpdated::class]);
+
         $currency = Currency::factory()->create();
         $dynamicSetting = DynamicSettingMock::setSettings([
             'seth' => 'tran',
@@ -128,10 +143,18 @@ class DynamicSettingsControllerTest extends TestCase
         $this->assertSame([
             'seth' => 'phat',
         ], $dynamicSetting->settings);
+
+        Event::assertDispatched(
+            DynamicSettingUpdated::class,
+            fn (DynamicSettingUpdated $event) => $event->dynamicSetting->is($dynamicSetting)
+                && array_key_exists('seth', $event->dynamicSetting->settings)
+        );
     }
 
     public function testUpdateEndpointUpdatesTheRecordAndChangeTheSource()
     {
+        Event::fake([DynamicSettingUpdated::class]);
+
         $currency = Currency::factory()->create();
         $dynamicSetting = DynamicSettingMock::setSettings([
             'seth' => 'tran',
@@ -164,10 +187,18 @@ class DynamicSettingsControllerTest extends TestCase
         $this->assertSame([
             'seth' => 'phat',
         ], $dynamicSetting->settings);
+
+        Event::assertDispatched(
+            DynamicSettingUpdated::class,
+            fn (DynamicSettingUpdated $event) => $event->dynamicSetting->is($dynamicSetting)
+                && array_key_exists('seth', $event->dynamicSetting->settings)
+        );
     }
 
     public function testDestroyEndpointDeletesTheRecord()
     {
+        Event::fake([DynamicSettingDeleted::class]);
+
         $dynamicSetting = DynamicSettingMock::setSettings([], Currency::factory()->create());
 
         $this->json('DELETE', 'saas/dynamic-settings/' . $dynamicSetting->uuid)
@@ -176,6 +207,11 @@ class DynamicSettingsControllerTest extends TestCase
         $this->assertDatabaseMissing($dynamicSetting->getTable(), [
             'id' => $dynamicSetting->id,
         ]);
+
+        Event::assertDispatched(
+            DynamicSettingDeleted::class,
+            fn (DynamicSettingDeleted $event) => $event->dynamicSetting->is($dynamicSetting)
+        );
     }
 
     public function testDestroyEndpointDeletesTheGlobalReturnsError()
