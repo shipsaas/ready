@@ -16,6 +16,7 @@ use SaasReady\Models\Country;
 use SaasReady\Models\Currency;
 use SaasReady\Models\DynamicSetting;
 use SaasReady\Models\Event as EventModel;
+use SaasReady\Models\ReleaseNote;
 use SaasReady\Models\Translation;
 use SaasReady\Services\TranslationRepositories\CacheTranslationRepository;
 use SaasReady\Services\TranslationRepositories\DatabaseTranslationRepository;
@@ -53,6 +54,7 @@ class SaasServiceProvider extends ServiceProvider
         Route::model('event', EventModel::class);
         Route::model('translation', Translation::class);
         Route::model('dynamicSetting', DynamicSetting::class);
+        Route::model('releaseNote', ReleaseNote::class);
     }
 
     public function register(): void

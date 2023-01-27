@@ -30,6 +30,7 @@ return [
         'events' => true,
         'translations' => true,
         'dynamic-settings' => true,
+        'release-notes' => true,
     ],
 
     /**

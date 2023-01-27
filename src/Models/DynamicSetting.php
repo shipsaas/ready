@@ -2,6 +2,7 @@
 
 namespace SaasReady\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -14,6 +15,9 @@ use SaasReady\Traits\HasUuid;
  * @property int $model_id
  * @property string $model_type
  * @property array $settings
+ *
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  *
  * @property-read ?Model $model
  *
