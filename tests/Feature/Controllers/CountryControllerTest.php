@@ -2,7 +2,11 @@
 
 namespace SaasReady\Tests\Feature\Controllers;
 
+use Illuminate\Support\Facades\Event;
 use SaasReady\Constants\CountryCode;
+use SaasReady\Events\Country\CountryCreated;
+use SaasReady\Events\Country\CountryDeleted;
+use SaasReady\Events\Country\CountryUpdated;
 use SaasReady\Models\Country;
 use SaasReady\Tests\TestCase;
 
@@ -90,6 +94,8 @@ class CountryControllerTest extends TestCase
 
     public function testStoreEndpointCreateNewRecord()
     {
+        Event::fake([CountryCreated::class]);
+
         $this->json('POST', 'saas/countries/', [
             'code' => CountryCode::UNITED_STATES->value,
             'name' => 'United States',
@@ -103,10 +109,17 @@ class CountryControllerTest extends TestCase
             'dial_code' => '+1',
             'continent' => 'North America',
         ]);
+
+        Event::assertDispatched(
+            CountryCreated::class,
+            fn (CountryCreated $event) => $event->country->code === CountryCode::UNITED_STATES
+        );
     }
 
     public function testUpdateEndpointUpdatesTheRecord()
     {
+        Event::fake([CountryUpdated::class]);
+
         $country = Country::factory()->create([
             'code' => CountryCode::UNITED_STATES,
         ]);
@@ -135,10 +148,18 @@ class CountryControllerTest extends TestCase
             'dial_code' => '+84',
             'continent' => 'SEA',
         ]);
+
+        Event::assertDispatched(
+            CountryUpdated::class,
+            fn (CountryUpdated $event) => $event->country->code === CountryCode::VIETNAM
+                && $event->country->is($updatedCountry)
+        );
     }
 
     public function testDestroyEndpointDeletesTheRecord()
     {
+        Event::fake([CountryDeleted::class]);
+
         $country = Country::factory()->create();
 
         $this->json('DELETE', 'saas/countries/' . $country->uuid)
@@ -147,5 +168,10 @@ class CountryControllerTest extends TestCase
         $this->assertSoftDeleted($country->getTable(), [
             'id' => $country->id,
         ]);
+
+        Event::assertDispatched(
+            CountryDeleted::class,
+            fn (CountryDeleted $event) => $event->country->is($country)
+        );
     }
 }
