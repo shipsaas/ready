@@ -4,6 +4,10 @@ namespace SaasReady\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Event;
+use SaasReady\Events\Translation\TranslationCreated;
+use SaasReady\Events\Translation\TranslationDeleted;
+use SaasReady\Events\Translation\TranslationUpdated;
 use SaasReady\Http\Requests\Translation\TranslationDestroyRequest;
 use SaasReady\Http\Requests\Translation\TranslationIndexRequest;
 use SaasReady\Http\Requests\Translation\TranslationShowRequest;
@@ -33,6 +37,8 @@ class TranslationController extends Controller
     {
         $translation = Translation::create($request->validated());
 
+        Event::dispatch(new TranslationCreated($translation));
+
         return new JsonResponse([
             'uuid' => $translation->uuid,
         ], 201);
@@ -42,6 +48,8 @@ class TranslationController extends Controller
     {
         $translation->update($request->validated());
 
+        Event::dispatch(new TranslationUpdated($translation));
+
         return new JsonResponse([
             'uuid' => $translation->uuid,
         ]);
@@ -50,6 +58,8 @@ class TranslationController extends Controller
     public function destroy(TranslationDestroyRequest $request, Translation $translation): JsonResponse
     {
         $translation->delete();
+
+        Event::dispatch(new TranslationDeleted($translation));
 
         return new JsonResponse();
     }

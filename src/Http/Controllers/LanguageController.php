@@ -4,6 +4,10 @@ namespace SaasReady\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Event;
+use SaasReady\Events\Language\LanguageCreated;
+use SaasReady\Events\Language\LanguageDeleted;
+use SaasReady\Events\Language\LanguageUpdated;
 use SaasReady\Http\Requests\Language\LanguageDestroyRequest;
 use SaasReady\Http\Requests\Language\LanguageIndexRequest;
 use SaasReady\Http\Requests\Language\LanguageShowRequest;
@@ -33,13 +37,15 @@ class LanguageController extends Controller
 
     public function store(LanguageStoreRequest $request): JsonResponse
     {
-        $currency = Language::create([
+        $language = Language::create([
             ...$request->validated(),
             'activated_at' => $request->boolean('is_active') ? now() : null,
         ]);
 
+        Event::dispatch(new LanguageCreated($language));
+
         return new JsonResponse([
-            'uuid' => $currency->uuid,
+            'uuid' => $language->uuid,
         ], 201);
     }
 
@@ -50,6 +56,8 @@ class LanguageController extends Controller
             'activated_at' => $request->boolean('is_active') ? now() : null,
         ]);
 
+        Event::dispatch(new LanguageUpdated($language));
+
         return new JsonResponse([
             'uuid' => $language->uuid,
         ]);
@@ -58,6 +66,8 @@ class LanguageController extends Controller
     public function destroy(LanguageDestroyRequest $request, Language $language): JsonResponse
     {
         $language->delete();
+
+        Event::dispatch(new LanguageDeleted($language));
 
         return new JsonResponse();
     }

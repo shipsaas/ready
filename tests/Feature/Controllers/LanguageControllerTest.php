@@ -2,7 +2,11 @@
 
 namespace SaasReady\Tests\Feature\Controllers;
 
+use Illuminate\Support\Facades\Event;
 use SaasReady\Constants\LanguageCode;
+use SaasReady\Events\Language\LanguageCreated;
+use SaasReady\Events\Language\LanguageDeleted;
+use SaasReady\Events\Language\LanguageUpdated;
 use SaasReady\Models\Language;
 use SaasReady\Tests\TestCase;
 
@@ -112,6 +116,7 @@ class LanguageControllerTest extends TestCase
 
     public function testStoreEndpointCreateNewRecord()
     {
+        Event::fake([LanguageCreated::class]);
         $this->travelTo('2022-10-23 10:00:59');
 
         $this->json('POST', 'saas/languages/', [
@@ -125,10 +130,18 @@ class LanguageControllerTest extends TestCase
             'name' => 'English',
             'activated_at' => '2022-10-23 10:00:59',
         ]);
+
+        Event::assertDispatched(
+            LanguageCreated::class,
+            fn (LanguageCreated $event) => $event->language->code === LanguageCode::ENGLISH
+                && $event->language->name === 'English'
+        );
     }
 
     public function testUpdateEndpointUpdatesTheRecord()
     {
+        Event::fake([LanguageUpdated::class]);
+
         $language = Language::factory()->create([
             'code' => LanguageCode::ENGLISH->value,
             'name' => 'English',
@@ -156,10 +169,19 @@ class LanguageControllerTest extends TestCase
             'code' => LanguageCode::VIETNAMESE->value,
             'name' => 'Vietnamese',
         ]);
+
+        Event::assertDispatched(
+            LanguageUpdated::class,
+            fn (LanguageUpdated $event) => $event->language->code === LanguageCode::VIETNAMESE
+                && $event->language->name === 'Vietnamese'
+                && $event->language->is($language)
+        );
     }
 
     public function testDestroyEndpointDeletesTheRecord()
     {
+        Event::fake([LanguageDeleted::class]);
+
         $language = Language::factory()->create();
 
         $this->json('DELETE', 'saas/languages/' . $language->uuid)
@@ -168,5 +190,10 @@ class LanguageControllerTest extends TestCase
         $this->assertSoftDeleted($language->getTable(), [
             'id' => $language->id,
         ]);
+
+        Event::assertDispatched(
+            LanguageDeleted::class,
+            fn (LanguageDeleted $event) => $event->language->is($language)
+        );
     }
 }
