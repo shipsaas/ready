@@ -42,6 +42,8 @@ For all of these generic entities (more coming uppp 🥳):
 - Languages (with English)
 - Translations (dynamic translations)
 - Events (event sourcing)
+- Dynamic Settings
+- Release Notes
 
 Once you install the ShipSaaS Ready, you got multiple generic entities under your hands, let's build awesome products.
 
