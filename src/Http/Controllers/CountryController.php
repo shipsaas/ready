@@ -4,6 +4,10 @@ namespace SaasReady\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Event;
+use SaasReady\Events\Country\CountryCreated;
+use SaasReady\Events\Country\CountryDeleted;
+use SaasReady\Events\Country\CountryUpdated;
 use SaasReady\Http\Requests\Country\CountryDestroyRequest;
 use SaasReady\Http\Requests\Country\CountryIndexRequest;
 use SaasReady\Http\Requests\Country\CountryShowRequest;
@@ -32,16 +36,20 @@ class CountryController extends Controller
 
     public function store(CountryStoreRequest $request): JsonResponse
     {
-        $currency = Country::create($request->validated());
+        $country = Country::create($request->validated());
+
+        Event::dispatch(new CountryCreated($country));
 
         return new JsonResponse([
-            'uuid' => $currency->uuid,
+            'uuid' => $country->uuid,
         ], 201);
     }
 
     public function update(CountryUpdateRequest $request, Country $country): JsonResponse
     {
         $country->update($request->validated());
+
+        Event::dispatch(new CountryUpdated($country));
 
         return new JsonResponse([
             'uuid' => $country->uuid,
@@ -51,6 +59,8 @@ class CountryController extends Controller
     public function destroy(CountryDestroyRequest $request, Country $country): JsonResponse
     {
         $country->delete();
+
+        Event::dispatch(new CountryDeleted($country));
 
         return new JsonResponse();
     }

@@ -4,6 +4,10 @@ namespace SaasReady\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Event;
+use SaasReady\Events\DynamicSetting\DynamicSettingCreated;
+use SaasReady\Events\DynamicSetting\DynamicSettingDeleted;
+use SaasReady\Events\DynamicSetting\DynamicSettingUpdated;
 use SaasReady\Http\Requests\DynamicSetting\DynamicSettingIndexRequest;
 use SaasReady\Http\Requests\DynamicSetting\DynamicSettingStoreRequest;
 use SaasReady\Http\Requests\DynamicSetting\DynamicSettingUpdateRequest;
@@ -38,6 +42,8 @@ class DynamicSettingsController extends Controller
             'model_type' => $relatedModel->getMorphClass(),
         ]);
 
+        Event::dispatch(new DynamicSettingCreated($dynamicSetting));
+
         return new JsonResponse([
             'uuid' => $dynamicSetting->uuid,
         ], 201);
@@ -55,6 +61,8 @@ class DynamicSettingsController extends Controller
             'model_type' => $relatedModel?->getMorphClass() ?? $dynamicSetting->model_type,
         ]);
 
+        Event::dispatch(new DynamicSettingUpdated($dynamicSetting));
+
         return new JsonResponse([
             'uuid' => $dynamicSetting->uuid,
         ]);
@@ -69,6 +77,8 @@ class DynamicSettingsController extends Controller
         }
 
         $dynamicSetting->delete();
+
+        Event::dispatch(new DynamicSettingDeleted($dynamicSetting));
 
         return new JsonResponse();
     }

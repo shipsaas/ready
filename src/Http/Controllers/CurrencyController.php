@@ -4,6 +4,10 @@ namespace SaasReady\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Event;
+use SaasReady\Events\Currency\CurrencyCreated;
+use SaasReady\Events\Currency\CurrencyDeleted;
+use SaasReady\Events\Currency\CurrencyUpdated;
 use SaasReady\Http\Requests\Currency\CurrencyDestroyRequest;
 use SaasReady\Http\Requests\Currency\CurrencyIndexRequest;
 use SaasReady\Http\Requests\Currency\CurrencyShowRequest;
@@ -38,6 +42,8 @@ class CurrencyController extends Controller
             'activated_at' => $request->boolean('is_active') ? now() : null,
         ]);
 
+        Event::dispatch(new CurrencyCreated($currency));
+
         return new JsonResponse([
             'uuid' => $currency->uuid,
         ], 201);
@@ -50,6 +56,8 @@ class CurrencyController extends Controller
             'activated_at' => $request->boolean('is_active') ? now() : null,
         ]);
 
+        Event::dispatch(new CurrencyUpdated($currency));
+
         return new JsonResponse([
             'uuid' => $currency->uuid,
         ]);
@@ -58,6 +66,8 @@ class CurrencyController extends Controller
     public function destroy(CurrencyDestroyRequest $request, Currency $currency): JsonResponse
     {
         $currency->delete();
+
+        Event::dispatch(new CurrencyDeleted($currency));
 
         return new JsonResponse();
     }

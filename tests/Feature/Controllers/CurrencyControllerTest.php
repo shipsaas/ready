@@ -2,7 +2,11 @@
 
 namespace SaasReady\Tests\Feature\Controllers;
 
+use Illuminate\Support\Facades\Event;
 use SaasReady\Constants\CurrencyCode;
+use SaasReady\Events\Currency\CurrencyCreated;
+use SaasReady\Events\Currency\CurrencyDeleted;
+use SaasReady\Events\Currency\CurrencyUpdated;
 use SaasReady\Models\Currency;
 use SaasReady\Tests\TestCase;
 
@@ -100,6 +104,7 @@ class CurrencyControllerTest extends TestCase
 
     public function testStoreEndpointCreateNewRecord()
     {
+        Event::fake([CurrencyCreated::class]);
         $this->travelTo('2022-10-10 10:00:00');
 
         $this->json('POST', 'saas/currencies/', [
@@ -123,10 +128,18 @@ class CurrencyControllerTest extends TestCase
             'space_after_symbol' => 1,
             'activated_at' => '2022-10-10 10:00:00',
         ]);
+
+        Event::assertDispatched(
+            CurrencyCreated::class,
+            fn (CurrencyCreated $event) => $event->currency->code === CurrencyCode::UNITED_STATES_DOLLAR
+                && $event->currency->name === 'US Dollar'
+        );
     }
 
     public function testUpdateEndpointUpdatesTheRecord()
     {
+        Event::fake([CurrencyUpdated::class]);
+
         $currency = Currency::factory()->create([
             'code' => CurrencyCode::UNITED_STATES_DOLLAR,
             'activated_at' => now(),
@@ -154,10 +167,18 @@ class CurrencyControllerTest extends TestCase
             'code' => CurrencyCode::VIETNAMESE_DONG->value,
             'name' => 'Vietnamese Dong',
         ]);
+
+        Event::assertDispatched(
+            CurrencyUpdated::class,
+            fn (CurrencyUpdated $event) => $event->currency->code === CurrencyCode::VIETNAMESE_DONG
+                && $event->currency->name === 'Vietnamese Dong'
+        );
     }
 
     public function testDestroyEndpointDeletesTheRecord()
     {
+        Event::fake([CurrencyDeleted::class]);
+
         $currency = Currency::factory()->create();
 
         $this->json('DELETE', 'saas/currencies/' . $currency->uuid)
@@ -166,5 +187,10 @@ class CurrencyControllerTest extends TestCase
         $this->assertSoftDeleted($currency->getTable(), [
             'id' => $currency->id,
         ]);
+
+        Event::assertDispatched(
+            CurrencyDeleted::class,
+            fn (CurrencyDeleted $event) => $event->currency->is($currency)
+        );
     }
 }
