@@ -18,6 +18,7 @@ use SaasReady\Models\DynamicSetting;
 use SaasReady\Models\Event as EventModel;
 use SaasReady\Models\ReleaseNote;
 use SaasReady\Models\Translation;
+use SaasReady\Services\FileManager\FileManager;
 use SaasReady\Services\TranslationRepositories\CacheTranslationRepository;
 use SaasReady\Services\TranslationRepositories\DatabaseTranslationRepository;
 
@@ -61,6 +62,7 @@ class SaasServiceProvider extends ServiceProvider
     {
         $this->app->singleton(DatabaseTranslationRepository::class);
         $this->app->singleton(CacheTranslationRepository::class);
+        $this->app->singleton(FileManager::class);
 
         $this->app->bind(TranslationRepositoryContract::class, function () {
             if (config('saas-ready.translation.should-cache')) {
