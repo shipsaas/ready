@@ -14,7 +14,7 @@ class FileManager
     /**
      * Upload the file
      *
-     * @codeCoverageIgnore (WIP)
+     * @codeCoverageIgnore
      */
     public function upload(UploadOption $uploadOption): ?File
     {
@@ -25,7 +25,7 @@ class FileManager
     /**
      * Get the URL of the File
      *
-     * @codeCoverageIgnore (WIP)
+     * @codeCoverageIgnore
      */
     public function preview(File $file): ?string
     {

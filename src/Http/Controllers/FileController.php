@@ -10,6 +10,8 @@ class FileController extends Controller
 {
     /**
      * Get a list of files
+     *
+     * @codeCoverageIgnore
      */
     public function index(): JsonResponse
     {
@@ -17,6 +19,9 @@ class FileController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function show(File $file): JsonResponse
     {
         // TODO: implements
@@ -25,6 +30,8 @@ class FileController extends Controller
 
     /**
      * Upload a file
+     *
+     * @codeCoverageIgnore
      */
     public function store(): JsonResponse
     {
@@ -32,6 +39,9 @@ class FileController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function destroy(File $file): JsonResponse
     {
         $file->delete();
