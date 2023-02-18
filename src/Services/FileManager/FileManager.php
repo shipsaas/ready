@@ -2,33 +2,66 @@
 
 namespace SaasReady\Services\FileManager;
 
-use Illuminate\Filesystem\FilesystemManager;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use SaasReady\Models\File;
 
 class FileManager
 {
-    public function __construct(private FilesystemManager $filesystemManager)
-    {
-    }
-
     /**
      * Upload the file
-     *
-     * @codeCoverageIgnore
      */
     public function upload(UploadOption $uploadOption): ?File
     {
-        // TODO: implements
-        return null;
+        $driver = $uploadOption->driver ?: Storage::getDefaultDriver();
+        $storage = Storage::disk($driver);
+
+        $file = $uploadOption->file;
+        $newFileName = $uploadOption->newFileName ?: Str::orderedUuid() . '.' . $file->getExtension();
+        $storagePath = $uploadOption->storePath ?: 'files/';
+
+        // upload
+        $uploadResult = $storage->putFileAs(
+            $storagePath,
+            $file,
+            $newFileName
+        );
+
+        if ($uploadResult === false) {
+            return null;
+        }
+
+        return File::create([
+            'category' => $uploadOption->category,
+            'model_id' => $uploadOption->source?->getKey(),
+            'model_type' => $uploadOption->source?->getMorphClass(),
+            'mime_type' => $file->getType(),
+            'path' => $storagePath . '/' . $newFileName,
+            'filename' => $newFileName,
+            'original_filename' => $file->getFilename(),
+            'size' => $file->getSize(),
+            'source' => $driver,
+        ]);
+    }
+
+    /**
+     * Get the URL of the File
+     */
+    public function getUrl(File $file): ?string
+    {
+        return Storage::disk($file->source ?: null)
+            ->url($file->path);
     }
 
     /**
      * Get the URL of the File
      *
-     * @codeCoverageIgnore
+     * Note: only s3 is supporting this
      */
-    public function preview(File $file): ?string
+    public function getTemporaryUrl(File $file, Carbon $expiredAt): ?string
     {
-        return null;
+        return Storage::disk($file->source ?: null)
+            ->temporaryUrl($file->path, $expiredAt);
     }
 }

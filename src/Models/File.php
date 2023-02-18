@@ -27,7 +27,7 @@ use SaasReady\Traits\HasUuid;
  * @property ?Carbon $updated_at
  * @property ?Carbon $deleted_at
  *
- * @property-read Model $model
+ * @property-read ?Model $model
  *
  * @mixin EloquentBuilderMixin
  */

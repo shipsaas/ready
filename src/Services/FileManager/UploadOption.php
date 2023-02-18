@@ -13,13 +13,14 @@ final class UploadOption
      * The file that will be uploaded to storage disk
      */
     public SplFileInfo $file;
+    public ?string $fileMimeType = null;
 
     /**
      * Desired path to store the file
      *
      * @example user/$user->id/avatar/
      */
-    public string $storePath = '';
+    public string $storePath = 'files/';
 
     /**
      * New filename after uploaded
@@ -33,10 +34,23 @@ final class UploadOption
      */
     public ?Model $source = null;
 
+    /**
+     * Category name of the file.
+     */
+    public string $category = 'file';
+
+    /**
+     * Custom driver of the file.
+     *
+     * By default, it will use the default driver from ENV
+     */
+    public ?string $driver = null;
+
     public static function prepareFromUploadedFile(UploadedFile $uploadedFile): self
     {
         $option = new self();
         $option->file = $uploadedFile->getFileInfo();
+        $option->fileMimeType = $uploadedFile->getClientMimeType();
 
         return $option;
     }
