@@ -36,11 +36,11 @@ class FileManager
             'category' => $uploadOption->category,
             'model_id' => $uploadOption->source?->getKey(),
             'model_type' => $uploadOption->source?->getMorphClass(),
-            'mime_type' => $file->getType(),
-            'path' => $storagePath . '/' . $newFileName,
+            'mime_type' => $uploadOption->fileMimeType ?: $file->getType(),
+            'path' => $storagePath . $newFileName,
             'filename' => $newFileName,
-            'original_filename' => $file->getFilename(),
-            'size' => $file->getSize(),
+            'original_filename' => $uploadOption->originalFileName ?: '',
+            'size' => $uploadOption->fileSize ?: $file->getSize(),
             'source' => $driver,
         ]);
     }
@@ -50,8 +50,12 @@ class FileManager
      */
     public function getUrl(File $file): ?string
     {
-        return Storage::disk($file->source ?: null)
-            ->url($file->path);
+        $disk = $file->getFilesystemDisk();
+        if (!$disk->exists($file->path)) {
+            return null;
+        }
+
+        return $disk->url($file->path);
     }
 
     /**
@@ -61,7 +65,11 @@ class FileManager
      */
     public function getTemporaryUrl(File $file, Carbon $expiredAt): ?string
     {
-        return Storage::disk($file->source ?: null)
-            ->temporaryUrl($file->path, $expiredAt);
+        $disk = $file->getFilesystemDisk();
+        if (!$disk->exists($file->path)) {
+            return null;
+        }
+
+        return $disk->temporaryUrl($file->path, $expiredAt);
     }
 }

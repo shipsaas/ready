@@ -13,11 +13,15 @@ final class UploadOption
      * The file that will be uploaded to storage disk
      */
     public SplFileInfo $file;
+
+    public ?string $originalFileName = null;
     public ?string $fileMimeType = null;
+    public ?int $fileSize = null;
 
     /**
      * Desired path to store the file
      *
+     * @note: require a '/' at the end
      * @example user/$user->id/avatar/
      */
     public string $storePath = 'files/';
@@ -53,7 +57,9 @@ final class UploadOption
     {
         $option = new self();
         $option->file = $uploadedFile->getFileInfo();
-        $option->fileMimeType = $uploadedFile->getClientMimeType();
+        $option->originalFileName = $uploadedFile->getClientOriginalName();
+        $option->fileMimeType = $uploadedFile->getMimeType();
+        $option->fileSize = $uploadedFile->getSize();
 
         return $option;
     }
@@ -69,6 +75,9 @@ final class UploadOption
         if (!$option->file->isReadable()) {
             throw new RuntimeException("The file $filePath is not readable. Cannot process further.");
         }
+
+        $option->originalFileName = basename($filePath);
+        $option->fileSize = $option->file->getSize();
 
         return $option;
     }
