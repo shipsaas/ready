@@ -46,6 +46,9 @@ final class UploadOption
      */
     public ?string $driver = null;
 
+    /**
+     * Create the upload option from UploadedFile
+     */
     public static function prepareFromUploadedFile(UploadedFile $uploadedFile): self
     {
         $option = new self();
@@ -55,6 +58,9 @@ final class UploadOption
         return $option;
     }
 
+    /**
+     * Create the upload option from a specific file in your server/machine
+     */
     public static function prepareFromPath(string $filePath): self
     {
         $option = new self();
