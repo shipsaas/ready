@@ -8,6 +8,11 @@ use SaasReady\Models\Currency;
 
 class CurrencyUpdateRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'currencies.update';
+    }
+
     public function rules(): array
     {
         return [

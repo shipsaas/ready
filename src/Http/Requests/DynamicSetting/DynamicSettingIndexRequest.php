@@ -7,6 +7,11 @@ use SaasReady\Rules\ClassExistsRule;
 
 class DynamicSettingIndexRequest extends FormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'dynamic-settings.index';
+    }
+
     public function rules(): array
     {
         return [

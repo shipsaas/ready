@@ -9,6 +9,11 @@ use SaasReady\Rules\TranslationValuesRule;
 
 class TranslationStoreRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'translations.store';
+    }
+
     public function rules(): array
     {
         return [

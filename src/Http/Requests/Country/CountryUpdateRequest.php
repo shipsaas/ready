@@ -8,6 +8,11 @@ use SaasReady\Models\Country;
 
 class CountryUpdateRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'countries.update';
+    }
+
     public function rules(): array
     {
         return [

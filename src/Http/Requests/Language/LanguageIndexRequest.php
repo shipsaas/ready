@@ -6,6 +6,11 @@ use SaasReady\Http\Requests\BaseFormRequest;
 
 class LanguageIndexRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'languages.index';
+    }
+
     public function rules(): array
     {
         return [

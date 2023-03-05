@@ -8,6 +8,11 @@ use SaasReady\Models\Country;
 
 class CountryStoreRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'countries.store';
+    }
+
     public function rules(): array
     {
         return [

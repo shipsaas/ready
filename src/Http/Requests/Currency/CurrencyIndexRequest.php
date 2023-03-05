@@ -6,6 +6,11 @@ use SaasReady\Http\Requests\BaseFormRequest;
 
 class CurrencyIndexRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'currencies.index';
+    }
+
     public function rules(): array
     {
         return [

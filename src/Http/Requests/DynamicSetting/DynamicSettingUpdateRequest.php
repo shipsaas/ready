@@ -8,6 +8,11 @@ use SaasReady\Rules\ClassExistsRule;
 
 class DynamicSettingUpdateRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'dynamic-settings.update';
+    }
+
     public function rules(): array
     {
         return [

@@ -8,6 +8,11 @@ use SaasReady\Models\Country;
 
 class ReleaseNoteStoreRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'release-notes.store';
+    }
+
     public function rules(): array
     {
         return [

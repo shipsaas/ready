@@ -6,6 +6,11 @@ use SaasReady\Http\Requests\BaseFormRequest;
 
 class ReleaseNoteIndexRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'release-notes.index';
+    }
+
     public function rules(): array
     {
         return [

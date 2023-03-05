@@ -6,6 +6,11 @@ use SaasReady\Http\Requests\BaseFormRequest;
 
 class EventShowRequest extends BaseFormRequest
 {
+    protected function getEndpointName(): string
+    {
+        return 'events.show';
+    }
+
     public function rules(): array
     {
         return [
