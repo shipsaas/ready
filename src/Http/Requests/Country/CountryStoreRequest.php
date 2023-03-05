@@ -8,11 +8,6 @@ use SaasReady\Models\Country;
 
 class CountryStoreRequest extends BaseFormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [

@@ -8,11 +8,6 @@ use SaasReady\Models\Currency;
 
 class CurrencyUpdateRequest extends BaseFormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [

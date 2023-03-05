@@ -10,11 +10,6 @@ class EventIndexRequest extends BaseFormRequest
 {
     private ?Model $source = null;
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
