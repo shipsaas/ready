@@ -6,9 +6,9 @@ use SaasReady\Http\Requests\BaseFormRequest;
 
 class TranslationShowRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'translations.show';
     }
 
     public function rules(): array

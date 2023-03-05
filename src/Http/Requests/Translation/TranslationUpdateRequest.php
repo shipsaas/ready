@@ -9,9 +9,9 @@ use SaasReady\Rules\TranslationValuesRule;
 
 class TranslationUpdateRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'translations.update';
     }
 
     public function rules(): array

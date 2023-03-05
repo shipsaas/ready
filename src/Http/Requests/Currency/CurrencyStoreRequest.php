@@ -8,9 +8,9 @@ use SaasReady\Models\Currency;
 
 class CurrencyStoreRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'currencies.store';
     }
 
     public function rules(): array

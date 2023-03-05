@@ -10,9 +10,9 @@ class EventIndexRequest extends BaseFormRequest
 {
     private ?Model $source = null;
 
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'events.index';
     }
 
     public function rules(): array

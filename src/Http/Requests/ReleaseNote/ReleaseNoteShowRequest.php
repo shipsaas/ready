@@ -6,9 +6,9 @@ use SaasReady\Http\Requests\BaseFormRequest;
 
 class ReleaseNoteShowRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'release-notes.show';
     }
 
     public function rules(): array

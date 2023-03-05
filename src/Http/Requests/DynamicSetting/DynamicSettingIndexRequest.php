@@ -3,13 +3,14 @@
 namespace SaasReady\Http\Requests\DynamicSetting;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SaasReady\Http\Requests\BaseFormRequest;
 use SaasReady\Rules\ClassExistsRule;
 
-class DynamicSettingIndexRequest extends FormRequest
+class DynamicSettingIndexRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'dynamic-settings.index';
     }
 
     public function rules(): array

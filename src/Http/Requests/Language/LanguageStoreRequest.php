@@ -8,9 +8,9 @@ use SaasReady\Models\Language;
 
 class LanguageStoreRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'languages.store';
     }
 
     public function rules(): array

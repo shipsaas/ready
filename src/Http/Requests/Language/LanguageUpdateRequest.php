@@ -8,9 +8,9 @@ use SaasReady\Models\Language;
 
 class LanguageUpdateRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'languages.update';
     }
 
     public function rules(): array

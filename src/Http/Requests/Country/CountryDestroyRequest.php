@@ -6,9 +6,9 @@ use SaasReady\Http\Requests\BaseFormRequest;
 
 class CountryDestroyRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'countries.destroy';
     }
 
     public function rules(): array

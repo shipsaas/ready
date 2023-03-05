@@ -8,9 +8,9 @@ use SaasReady\Models\Country;
 
 class ReleaseNoteStoreRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'release-notes.store';
     }
 
     public function rules(): array

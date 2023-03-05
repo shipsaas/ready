@@ -6,9 +6,9 @@ use SaasReady\Http\Requests\BaseFormRequest;
 
 class TranslationIndexRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'translations.index';
     }
 
     public function rules(): array

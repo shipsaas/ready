@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Event;
 use SaasReady\Events\DynamicSetting\DynamicSettingCreated;
 use SaasReady\Events\DynamicSetting\DynamicSettingDeleted;
 use SaasReady\Events\DynamicSetting\DynamicSettingUpdated;
+use SaasReady\Http\Requests\DynamicSetting\DynamicSettingDestroyRequest;
 use SaasReady\Http\Requests\DynamicSetting\DynamicSettingIndexRequest;
+use SaasReady\Http\Requests\DynamicSetting\DynamicSettingShowRequest;
 use SaasReady\Http\Requests\DynamicSetting\DynamicSettingStoreRequest;
 use SaasReady\Http\Requests\DynamicSetting\DynamicSettingUpdateRequest;
 use SaasReady\Http\Responses\DynamicSettingResource;
@@ -27,8 +29,10 @@ class DynamicSettingsController extends Controller
         return DynamicSettingResource::collection($dynamicSettings)->response();
     }
 
-    public function show(DynamicSetting $dynamicSetting): JsonResponse
-    {
+    public function show(
+        DynamicSettingShowRequest $request,
+        DynamicSetting $dynamicSetting
+    ): JsonResponse {
         return (new DynamicSettingResource($dynamicSetting))->response();
     }
 
@@ -68,8 +72,10 @@ class DynamicSettingsController extends Controller
         ]);
     }
 
-    public function destroy(DynamicSetting $dynamicSetting): JsonResponse
-    {
+    public function destroy(
+        DynamicSettingDestroyRequest $request,
+        DynamicSetting $dynamicSetting
+    ): JsonResponse {
         if ($dynamicSetting->model_id === null && $dynamicSetting->model_type === null) {
             return new JsonResponse([
                 'error' => 'Global dynamic setting can not be deleted',

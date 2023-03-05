@@ -8,9 +8,9 @@ use SaasReady\Models\Country;
 
 class ReleaseNoteUpdateRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected function getEndpointName(): string
     {
-        return true;
+        return 'release-notes.update';
     }
 
     public function rules(): array
