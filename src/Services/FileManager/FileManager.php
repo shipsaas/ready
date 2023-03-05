@@ -3,8 +3,10 @@
 namespace SaasReady\Services\FileManager;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use SaasReady\Events\File\FileCreated;
 use SaasReady\Models\File;
 
 class FileManager
@@ -32,7 +34,7 @@ class FileManager
             return null;
         }
 
-        return File::create([
+        $file = File::create([
             'category' => $uploadOption->category,
             'model_id' => $uploadOption->source?->getKey(),
             'model_type' => $uploadOption->source?->getMorphClass(),
@@ -43,6 +45,10 @@ class FileManager
             'size' => $uploadOption->fileSize ?: $file->getSize(),
             'source' => $driver,
         ]);
+
+        Event::dispatch(new FileCreated($file));
+
+        return $file;
     }
 
     /**

@@ -48,6 +48,12 @@ final class ReadyAuthorization
         'translations.store' => null,
         'translations.update' => null,
         'translations.destroy' => null,
+
+        'files.index' => null,
+        'files.show' => null,
+        'files.store' => null,
+        'files.update' => null,
+        'files.destroy' => null,
     ];
 
     /**
