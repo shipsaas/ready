@@ -34,5 +34,6 @@ class UploadOptionTest extends TestCase
 
         $this->assertNotNull($instance);
         $this->assertNotNull($instance->file);
+        $this->assertNotNull($instance->fileMimeType);
     }
 }

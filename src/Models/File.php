@@ -3,10 +3,13 @@
 namespace SaasReady\Models;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Support\Facades\Storage;
 use SaasReady\Database\Factories\FileFactory;
 use SaasReady\Traits\EloquentBuilderMixin;
 use SaasReady\Traits\HasUuid;
@@ -27,7 +30,7 @@ use SaasReady\Traits\HasUuid;
  * @property ?Carbon $updated_at
  * @property ?Carbon $deleted_at
  *
- * @property-read Model $model
+ * @property-read ?Model $model
  *
  * @mixin EloquentBuilderMixin
  */
@@ -67,5 +70,10 @@ class File extends Model
     protected static function newFactory(): FileFactory
     {
         return FileFactory::new();
+    }
+
+    public function getFilesystemDisk(): Filesystem | FilesystemManager
+    {
+        return Storage::disk($this->source ?: null);
     }
 }
