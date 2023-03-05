@@ -42,6 +42,12 @@ final class ReadyAuthorization
         'dynamic-settings.store' => null,
         'dynamic-settings.update' => null,
         'dynamic-settings.destroy' => null,
+
+        'translations.index' => null,
+        'translations.show' => null,
+        'translations.store' => null,
+        'translations.update' => null,
+        'translations.destroy' => null,
     ];
 
     /**
