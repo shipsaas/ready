@@ -3,9 +3,10 @@
 namespace SaasReady\Http\Requests\DynamicSetting;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SaasReady\Http\Requests\BaseFormRequest;
 use SaasReady\Rules\ClassExistsRule;
 
-class DynamicSettingIndexRequest extends FormRequest
+class DynamicSettingIndexRequest extends BaseFormRequest
 {
     protected function getEndpointName(): string
     {
