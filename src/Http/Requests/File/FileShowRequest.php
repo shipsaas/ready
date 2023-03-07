@@ -13,6 +13,13 @@ class FileShowRequest extends BaseFormRequest
 
     public function rules(): array
     {
-        return [];
+        return [
+            'wants_preview' => 'nullable|boolean',
+            'preview_type' => 'nullable|in:temporary,permanent',
+            'expired_time' => [
+                'required_if:preview_type,temporary',
+                'date_format:Y-m-d H:i:s',
+            ],
+        ];
     }
 }

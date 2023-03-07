@@ -31,6 +31,7 @@ return [
         'translations' => true,
         'dynamic-settings' => true,
         'release-notes' => true,
+        'files' => true,
     ],
 
     /**

@@ -19,10 +19,9 @@ class FileStoreRequest extends BaseFormRequest
             'source_type' => [
                 'required',
                 'string',
-                new ClassExistsRule(),
+                new ClassExistsRule(true),
             ],
-            'source_id' => 'required|int',
-            'settings' => 'required|array',
+            'source_id' => 'required',
         ];
     }
 

@@ -16,6 +16,7 @@ use SaasReady\Models\Country;
 use SaasReady\Models\Currency;
 use SaasReady\Models\DynamicSetting;
 use SaasReady\Models\Event as EventModel;
+use SaasReady\Models\File;
 use SaasReady\Models\ReleaseNote;
 use SaasReady\Models\Translation;
 use SaasReady\Services\FileManager\FileManager;
@@ -56,6 +57,7 @@ class SaasServiceProvider extends ServiceProvider
         Route::model('translation', Translation::class);
         Route::model('dynamicSetting', DynamicSetting::class);
         Route::model('releaseNote', ReleaseNote::class);
+        Route::model('file', File::class);
     }
 
     public function register(): void
